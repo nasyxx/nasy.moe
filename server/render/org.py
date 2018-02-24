@@ -49,15 +49,16 @@ from xxhash import xxh64
 
 from _config import C_POST
 from server.models.blog import Blog, Tag
-from server.types import BI, H_str, H_tag, P  # Type Alias
+from server.types import BI, BS, B, H_str, H_tag, P  # Type Alias
 from server.utils.const import NWORD
 from server.utils.str2path import s2p
 
 
 def clean_line(line: str) -> str:
     """Clean line."""
-    return line.replace("\n",
-                        "").replace("<", "").replace(">", "").replace("#+", "")
+    return line.replace("\n", "").replace("<",
+                                          "").replace(">",
+                                                      "").replace("#+", "")
 
 
 def get_org_info(line: str) -> BI:
@@ -70,7 +71,7 @@ def get_org_info(line: str) -> BI:
     elif kl in {"tags", "categories"}:
         return kl, sorted(re.split(r",\s*", v))
 
-    elif kl == "date":
+    elif kl == "date" and v:
         date = parse(v)
         return kl, {
             "year": str(date.year),
@@ -81,7 +82,8 @@ def get_org_info(line: str) -> BI:
 
 def org2tags(path: P) -> Tag:
     """Read tags of org file."""
-    path = s2p(path)
+    if isinstance(path, str):
+        path = s2p(path)
     tag = Tag(C_POST, title = path.stem)
     with path.open() as f:
         return tag(
@@ -151,6 +153,8 @@ def emacs_daemon(do: str) -> bool:
 
 def org2html_file(path: P) -> P:
     """Reander org file to html file."""
+    if isinstance(path, str):
+        path = s2p(path)
     logging.info(f"exporting to html: {path}")
     subprocess.Popen(
         "emacsclient --socket-name=org_to_html "
@@ -195,6 +199,8 @@ def html_content_edit(raw_content: H_tag) -> Tuple[H_tag, H_tag, str]:
 
 def org2html(path: P) -> Dict[str, Union[H_str, str]]:
     """Render org file to html string."""
+    if isinstance(path, str):
+        path = s2p(path)
     html_path = org2html_file(path)
     with html_path.open() as h, path.open() as f:
         html_str = h.read()
@@ -214,9 +220,10 @@ def org2html(path: P) -> Dict[str, Union[H_str, str]]:
     }
 
 
-def org2blog(path: P) -> Tuple[Tag, Blog]:
+def org2blog(path: P) -> Tuple[BS, B]:
     """Read org file."""
-    path = s2p(path)
+    if isinstance(path, str):
+        path = s2p(path)
     tag = org2tags(path)
     blog = Blog(tag)
     if not emacs_daemon("status"):

@@ -33,27 +33,36 @@ Excited without bugs::
 * file: server/types/__init__.py
 * license: MIT
 
+In fact, I am not really sure what is a NewType or TypeVar should be. Is it
+    just like the readable and meaningful type aliases?
+
+
 There are more things in heaven and earth, Horatio, than are dreamt.
  --  From "Hamlet"
 """
 from pathlib import Path
-from typing import Dict, List, Tuple, Union
+from typing import Dict, List, NewType, Tuple, TypeVar
 
 import bs4
 
 # Blog Tags & Content
-BT = Union[str, List[str], Dict[str, str]]
-# Blog Simple
-BS = Dict[str, BT]
+BT = TypeVar("BT", str, List[str], Dict[str, str])
 # Blog complete
 B = Dict[str, BT]
 # Blog info
 BI = Tuple[str, BT]
+# Blog Simple
+BS = Dict[str, BT]
+# Blogs
+BL = TypeVar("BL", Dict[str, B], Dict[str, BS])
+BLS = Tuple[BL, BL]
 # Config
-C = BT
+C = TypeVar("C", str, List[str], Dict[str, str])
 # Html Tag
 H_tag = bs4.element.Tag
 # Html String
-H_str = str
+H_str = NewType("H_str", str)
 # Path
-P = Union[str, Path]
+P = TypeVar("P", str, Path)
+# Paths: List of Paths
+LP = List[P]
