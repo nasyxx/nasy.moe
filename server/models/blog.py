@@ -36,8 +36,6 @@ Excited without bugs::
 There are more things in heaven and earth, Horatio, than are dreamt.
  --  From "Hamlet"
 """
-from server.types import BS
-
 from .model import Model
 
 try:
@@ -60,11 +58,6 @@ class Tag(Model):
             del self[i]
         return self
 
-    @property
-    def out(self) -> BS:
-        """Out put."""
-        return {k: v for k, v in self.clean().items()}
-
 
 class Blog(Model):
     """Blog Model."""
@@ -81,8 +74,3 @@ class Blog(Model):
             del self[i]
 
         return self
-
-    @property
-    def out(self) -> BS:
-        """Out put."""
-        return {k: v for k, v in self.clean().items()}

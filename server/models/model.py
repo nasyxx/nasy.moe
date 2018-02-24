@@ -36,36 +36,23 @@ Excited without bugs::
 There are more things in heaven and earth, Horatio, than are dreamt.
  --  From "Hamlet"
 """
-from typing import Any
+from typing import Any, TypeVar
 
-from server.types import C
+A = TypeVar("A")
+B = TypeVar("B")
 
 
 class Model(dict):
     """Model."""
 
-    def __getattr__(self, key: str) -> C:
-        """Dotable."""
-        return self[key]
-
-    def __setattr__(self, key: str, value: C) -> None:
-        """Set key value."""
-        if isinstance(value, str) or isinstance(value, list):
-            self[key] = value
-        else:
-            self[key] = self.__class__(value)
-
-    def __delattr__(self, key: str) -> None:
-        """Delete some key."""
-        del self[key]
-
-    def __call__(self, *args: Any, **kwgs: Any) -> "Model":
+    def __call__(self, *args: A, **kwgs: B) -> "Model":
         """Call is another update."""
         self.update(*args, **kwgs)
         return self
 
     def __repr__(self) -> str:
         """Repr for Model."""
+        self.clean()
         return "".join([
             # prefix
             f"{self.__class__.__name__}:\n\t",
@@ -78,7 +65,7 @@ class Model(dict):
             ),
         ])
 
-    def __init__(self, *args: Any, **kwgs: Any) -> None:
+    def __init__(self, *args: A, **kwgs: B) -> None:
         """Initilize the Model."""
         self.update(*args, **kwgs)
         self.clean()
