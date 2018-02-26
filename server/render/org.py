@@ -41,7 +41,8 @@ import re
 import subprocess
 from collections import Counter
 from itertools import chain, takewhile
-from typing import Dict, Tuple, Union
+from pathlib import Path
+from typing import Dict, Optional, Tuple, Union
 
 import bs4
 from pendulum import parse
@@ -61,7 +62,7 @@ def clean_line(line: str) -> str:
                                                       "").replace("#+", "")
 
 
-def get_org_info(line: str) -> BI:
+def get_org_info(line: str) -> Optional[BI]:
     """Get org info."""
     k, *vs = re.split(r":\s*", clean_line(line))
     kl, v = k.lower(), "".join(vs)
@@ -78,6 +79,7 @@ def get_org_info(line: str) -> BI:
             "month": str(date.month),
             "day": str(date.day)
         }
+    return None
 
 
 def org2tags(path: P) -> Tag:
@@ -151,7 +153,7 @@ def emacs_daemon(do: str) -> bool:
     return False
 
 
-def org2html_file(path: P) -> P:
+def org2html_file(path: P) -> Path:
     """Reander org file to html file."""
     if isinstance(path, str):
         path = s2p(path)
@@ -210,13 +212,17 @@ def org2html(path: P) -> Dict[str, Union[H_str, str]]:
 
     return {
         k: v
-        for k, v in zip(("content", "content_table", "wordcount", "id"),
-                        chain(
-                            html_content_edit(
-                                bs4.BeautifulSoup(html_str, "lxml")
-                                .select("#content")[0]
-                            ), (xxh64(org_str).hexdigest(),)
-                        ))
+        for k, v
+        in zip(("content", "content_table", "wordcount", "hash", "id"),
+               chain(
+                   html_content_edit(
+                       bs4.BeautifulSoup(html_str, "lxml")
+                       .select("#content")[0]
+                   ), (
+                       xxh64(org_str).hexdigest(),
+                       xxh64(path.stem).hexdigest(),
+                   )
+               ))
     }
 
 

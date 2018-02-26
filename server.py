@@ -28,43 +28,48 @@ Excited without bugs::
     |  ___|______|______|______|______|______|____
 
 * author: Nasy https://nasy.moe
-* date: Feb 20, 2018
+* date: Feb 25, 2018
 * email: echo bmFzeXh4QGdtYWlsLmNvbQo= | base64 -D
-* file: server/types/__init__.py
+* file: server.py
 * license: MIT
-
-In fact, I am not really sure what is a NewType or TypeVar should be. Is it
-    just like the readable and meaningful type aliases?
-
 
 There are more things in heaven and earth, Horatio, than are dreamt.
  --  From "Hamlet"
 """
-from pathlib import Path
-from typing import Dict, Iterable, List, Tuple, Union
+from typing import Any
 
-import bs4
+from sanic import Sanic, request
+from sanic.response import json
 
-# Blog Tags & Content
-BT = Union[str, List[str], Dict[str, str]]
-# Blog complete
-B = Dict[str, BT]
-# Blog info
-BI = Tuple[str, BT]
-# Blog Simple
-BS = Dict[str, BT]
-# Blogs
-BL = Union[Dict[str, B], Dict[str, BS]]
-BLS = Tuple[BL, BL]
-# Blogs Store
-BST = List[Dict[str, BT]]
-# Config
-C = Union[str, List[str], Dict[str, str]]
-# Html Tag
-H_tag = bs4.element.Tag
-# Html String
-H_str = str
-# Path
-P = Union[str, Path]
-# Paths: List of Paths
-LP = Union[List[P], Iterable[P]]
+from server.render.render import render_blogs
+from server.stores.stores import (ldict2blog, load_store_blog, load_store_tag,
+                                  save_store_blog, save_store_tag)
+
+# from xxhash import xxh64
+
+app = Sanic("NasyLand")
+
+
+@app.listener("before_server_start")
+async def setup_db(app: Sanic, loop: Any) -> None:
+    """Load blog infomations before server start."""
+    tag, blog = render_blogs(2, "blog")
+    app.blog = ldict2blog(load_store_blog(blog))
+    app.tag = load_store_tag(tag)
+
+
+@app.listener("after_server_stop")
+async def close_db(app: Sanic, loop: Any) -> None:
+    """Save blog infomations after server stop."""
+    save_store_blog(app.blog)
+    save_store_tag(app.tag)
+
+
+@app.route("/tag")
+async def tag_api(request: request) -> json:
+    """Handle tag."""
+    return json(app.tag)
+
+
+if __name__ == '__main__':
+    app.run(host = "0.0.0.0", port = 1314)

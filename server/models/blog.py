@@ -36,7 +36,7 @@ Excited without bugs::
 There are more things in heaven and earth, Horatio, than are dreamt.
  --  From "Hamlet"
 """
-from .model import Model
+from .model import A, B, Model
 
 try:
     json = __import__("ujson")
@@ -47,12 +47,17 @@ except ModuleNotFoundError:
 class Tag(Model):
     """Tag model."""
 
+    def __call__(self, *args: A, **kwgs: B) -> "Tag":
+        """Call is another update."""
+        self.update(*args, **kwgs)
+        return self
+
     def clean(self) -> "Tag":
         """Delete useless keys."""
         for i in set(
             k for k in self.keys() if k not in {
                 "author", "title", "language", "summary", "tags", "categories",
-                "date", "year", "month", "day", "id", "wordcount"
+                "date", "year", "month", "day", "hash", "id", "wordcount"
             }
         ):
             del self[i]
@@ -62,13 +67,18 @@ class Tag(Model):
 class Blog(Model):
     """Blog Model."""
 
+    def __call__(self, *args: A, **kwgs: B) -> "Blog":
+        """Call is another update."""
+        self.update(*args, **kwgs)
+        return self
+
     def clean(self) -> "Blog":
         """Delete useless keys."""
         for i in set(
             k for k in self.keys() if k not in {
                 "author", "title", "language", "summary", "tags", "categories",
                 "date", "year", "month", "day", "content", "content_table",
-                "id", "wordcount"
+                "hash", "id", "wordcount"
             }
         ):
             del self[i]

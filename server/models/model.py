@@ -55,18 +55,18 @@ class Model(dict):
         self.clean()
         return "".join([
             # prefix
-            f"{self.__class__.__name__}:\n\t",
+            f"{self._name}:\n\t",
             # value
             "\n\t".join(
                 f"{i[0]}: {i[1]}" if isinstance(i[1], str) else
                 f"{i[0]}: {i[1]}".replace("\n\t", "\n\t\t")
-                .replace(f"{self.__class__.__name__}:", "")
-                for i in self.items()
+                .replace(f"{self._name}:", "") for i in self.items()
             ),
         ])
 
     def __init__(self, *args: A, **kwgs: B) -> None:
         """Initilize the Model."""
+        self._name = self.__class__.__name__
         self.update(*args, **kwgs)
         self.clean()
 

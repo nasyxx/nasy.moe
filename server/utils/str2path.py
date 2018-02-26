@@ -42,7 +42,6 @@ from pathlib import Path
 from server.types import P
 
 
-@lru_cache(maxsize = 65536)
 def s2p(path: P) -> Path:
     """Turn string/Path to Path."""
     assert any((isinstance(path, str), isinstance(path, Path))) is True

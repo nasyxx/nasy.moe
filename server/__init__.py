@@ -30,7 +30,7 @@ Excited without bugs::
 * author: Nasy https://nasy.moe
 * date: Feb 20, 2018
 * email: echo bmFzeXh4QGdtYWlsLmNvbQo= | base64 -D
-* file: server/main.py
+* file: server/__init__.py
 * license: MIT
 
 There are more things in heaven and earth, Horatio, than are dreamt.
