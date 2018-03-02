@@ -61,14 +61,9 @@ def ldict2blog(lblog: BST) -> BL:
 def update_store(stored: BST, blog: BL) -> BST:
     """Combine store and blog."""
     return list(
-        filter(
-            lambda x: x,
-            map(
-                lambda x: blog.pop(str(x.get("id")))
-                if x.get("id") in blog else x, stored
-            )
-        )
-    ) + blog2ldict(blog)
+        filter(lambda x: x,
+               map(lambda x: blog.pop(str(x.get("id")))
+                   if x.get("id") in blog else x, stored))) + blog2ldict(blog)
 
 
 @curry

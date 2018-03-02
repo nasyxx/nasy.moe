@@ -78,8 +78,7 @@ def render_blogs(workers: int, basepath: P) -> BLS:
     result = reduce(  # type: ignore
         combine_blogs,
         chain(*(pool.map(org2blog, blog) for suffix, blog in all_blogs)),
-        ({}, {})
-    )  # type: BLS
+        ({}, {}))  # type: BLS
     pool.close()
     pool.join()
     return result

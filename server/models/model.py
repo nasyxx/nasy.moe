@@ -58,11 +58,9 @@ class Model(dict):
             # prefix
             f"{self._name}:\n\t",
             # value
-            "\n\t".join(
-                f"{i[0]}: {i[1]}" if isinstance(i[1], str) else
-                f"{i[0]}: {i[1]}".replace("\n\t", "\n\t\t")
-                .replace(f"{self._name}:", "") for i in self.items()
-            ),
+            "\n\t".join(f"{i[0]}: {i[1]}" if isinstance(i[
+                1], str) else f"{i[0]}: {i[1]}".replace("\n\t", "\n\t\t")
+                        .replace(f"{self._name}:", "") for i in self.items()),
         ])
 
     def __init__(self, *args: A, **kwgs: B) -> None:
