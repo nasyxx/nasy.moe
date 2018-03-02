@@ -58,3 +58,5 @@ docs/_build/
 target/
 .mypy_cache
 .ropeproject
+elm-stuff
+.stores

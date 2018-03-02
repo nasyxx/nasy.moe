@@ -27,10 +27,11 @@ Excited without bugs::
     |  ______|______|______|______|______|______|_
     |  ___|______|______|______|______|______|____
 
-* author: Nasy https://nasy.moe
+* author: Nasy https://nasy.moe <nasyxx>
 * date: Feb 22, 2018
 * email: echo bmFzeXh4QGdtYWlsLmNvbQo= | base64 -D
-* file: server/render/render.py
+* filename: render.py
+* Last modified time: Mar 2, 2018
 * license: MIT
 
 There are more things in heaven and earth, Horatio, than are dreamt.

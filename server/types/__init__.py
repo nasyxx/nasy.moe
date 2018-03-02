@@ -27,15 +27,15 @@ Excited without bugs::
     |  ______|______|______|______|______|______|_
     |  ___|______|______|______|______|______|____
 
-* author: Nasy https://nasy.moe
+* author: Nasy https://nasy.moe <nasyxx>
 * date: Feb 20, 2018
 * email: echo bmFzeXh4QGdtYWlsLmNvbQo= | base64 -D
-* file: server/types/__init__.py
+* filename: __init__.py
+* Last modified time: Mar 2, 2018
 * license: MIT
 
 In fact, I am not really sure what is a NewType or TypeVar should be. Is it
     just like the readable and meaningful type aliases?
-
 
 There are more things in heaven and earth, Horatio, than are dreamt.
  --  From "Hamlet"
