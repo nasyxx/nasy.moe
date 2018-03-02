@@ -41,12 +41,11 @@ from typing import Any
 
 from sanic import Sanic, request
 from sanic.response import json
+from xxhash import xxh64
 
 from server.render.render import render_blogs
 from server.stores.stores import (ldict2blog, load_store_blog, load_store_tag,
                                   save_store_blog, save_store_tag)
-
-# from xxhash import xxh64
 
 app = Sanic("NasyLand")
 
@@ -70,6 +69,16 @@ async def close_db(app: Sanic, loop: Any) -> None:
 async def tag_api(request: request) -> json:
     """Handle tag."""
     return json(app.tag)
+
+
+@app.route(("/<year:[0-9]{4}>"
+            "/<month:0[1-9]|1[012]>"
+            "/<day:0[1-9]|[12][0-9]|3[01]>"
+            "/<name>"))
+async def blog_api(request: request, year: int, month: int, day: int,
+                   name: str) -> json:
+    """Handle tag."""
+    return json(app.blog.get(xxh64(name).hexdigest()))
 
 
 if __name__ == '__main__':
