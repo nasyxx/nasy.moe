@@ -27,10 +27,11 @@ Excited without bugs::
     |  ______|______|______|______|______|______|_
     |  ___|______|______|______|______|______|____
 
-* author: Nasy https://nasy.moe
+* author: Nasy https://nasy.moe <Nasy>
 * date: Feb 20, 2018
 * email: echo bmFzeXh4QGdtYWlsLmNvbQo= | base64 -D
-* file: server/utils/str2path.py
+* filename: str2path.py
+* Last modified time: Mar 3, 2018
 * license: MIT
 
 There are more things in heaven and earth, Horatio, than are dreamt.
@@ -42,6 +43,7 @@ from pathlib import Path
 from server.types import P
 
 
+@lru_cache(maxsize = 65536)
 def s2p(path: P) -> Path:
     """Turn string/Path to Path."""
     assert any((isinstance(path, str), isinstance(path, Path))) is True

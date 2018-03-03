@@ -27,16 +27,15 @@ Excited without bugs::
     |  ______|______|______|______|______|______|_
     |  ___|______|______|______|______|______|____
 
-* author: Nasy https://nasy.moe
+* author: Nasy https://nasy.moe <Nasy>
 * date: Feb 19, 2018
 * email: echo bmFzeXh4QGdtYWlsLmNvbQo= | base64 -D
-* file: server/utils/__init__.py
+* filename: curring.py
+* Last modified time: Mar 3, 2018
 * license: MIT
 
 There are more things in heaven and earth, Horatio, than are dreamt.
  --  From "Hamlet"
-
-Thanks to https://gist.github.com/JulienPalard/021f1c7332507d6a494b @blurrcat
 """
 from functools import wraps
 from typing import Any, Callable

@@ -27,18 +27,17 @@ Excited without bugs::
     |  ______|______|______|______|______|______|_
     |  ___|______|______|______|______|______|____
 
-* author: Nasy https://nasy.moe
+* author: Nasy https://nasy.moe <Nasy>
 * date: Feb 21, 2018
 * email: echo bmFzeXh4QGdtYWlsLmNvbQo= | base64 -D
-* file: const.py
+* filename: const.py
+* Last modified time: Mar 3, 2018
 * license: MIT
 
 There are more things in heaven and earth, Horatio, than are dreamt.
  --  From "Hamlet"
 """
-NWORD = set((
-    "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
-    "+-=_[]{}.,。，？?$()（）【】「」『』!！！～~*/&%\"\'“”‘’\n\t<>``\\;:；："
-    "@#%^&|"
-))
+NWORD = set(("1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
+             "+-=_[]{}.,。，？?$()（）【】「」『』!！！～~*/&%\"\'“”‘’\n\t<>``\\;:；："
+             "@#%^&|"))
 NWORD.add("")
