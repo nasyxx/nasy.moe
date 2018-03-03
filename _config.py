@@ -55,9 +55,9 @@ C_POST = dict(
     tags = ["blog"],
     categories = ["Blog"],
     date = {
-        "year": str(pendulum.now().year),
-        "month": str(pendulum.now().month),
-        "day": str(pendulum.now().day)
+        "year": f"{pendulum.now().year:4}",
+        "month": f"{pendulum.now().month:02}",
+        "day": f"{pendulum.now().day:02}"
     },
     content = "",
     content_table = "",

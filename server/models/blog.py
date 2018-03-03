@@ -56,11 +56,11 @@ class Tag(Model):
     def clean(self) -> "Tag":
         """Delete useless keys."""
         for i in set(
-            k for k in self.keys() if k not in {
-                "author", "title", "language", "summary", "tags", "categories",
-                "date", "year", "month", "day", "hash", "id", "wordcount"
-            }
-        ):
+                k for k in self.keys() if k not in {
+                    "author", "title", "language", "summary", "tags",
+                    "categories", "date", "year", "month", "day", "hash", "id",
+                    "wordcount", "blog_path"
+                }):
             del self[i]
         return self
 
@@ -76,12 +76,11 @@ class Blog(Model):
     def clean(self) -> "Blog":
         """Delete useless keys."""
         for i in set(
-            k for k in self.keys() if k not in {
-                "author", "title", "language", "summary", "tags", "categories",
-                "date", "year", "month", "day", "content", "content_table",
-                "hash", "id", "wordcount"
-            }
-        ):
+                k for k in self.keys() if k not in {
+                    "author", "title", "language", "summary", "tags",
+                    "categories", "date", "year", "month", "day", "content",
+                    "content_table", "hash", "id", "wordcount", "blog_path"
+                }):
             del self[i]
 
         return self

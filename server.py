@@ -38,8 +38,10 @@ There are more things in heaven and earth, Horatio, than are dreamt.
  --  From "Hamlet"
 """
 from typing import Any
+from urllib.parse import unquote
 
 from sanic import Sanic, request
+from sanic.exceptions import NotFound
 from sanic.response import json
 from xxhash import xxh64
 
@@ -58,13 +60,6 @@ async def setup_db(app: Sanic, loop: Any) -> None:
     app.tag = load_store_tag(tag)
 
 
-@app.listener("after_server_stop")
-async def close_db(app: Sanic, loop: Any) -> None:
-    """Save blog infomations after server stop."""
-    save_store_blog(app.blog)
-    save_store_tag(app.tag)
-
-
 @app.route("/tag")
 async def tag_api(request: request) -> json:
     """Handle tag."""
@@ -74,11 +69,25 @@ async def tag_api(request: request) -> json:
 @app.route(("/<year:[0-9]{4}>"
             "/<month:0[1-9]|1[012]>"
             "/<day:0[1-9]|[12][0-9]|3[01]>"
-            "/<name>"))
+            "/<title>"))
 async def blog_api(request: request, year: int, month: int, day: int,
-                   name: str) -> json:
+                   title: str) -> json:
     """Handle tag."""
-    return json(app.blog.get(xxh64(name).hexdigest()))
+    blog_date = {"year": year, "month": month, "day": day}
+    req_blog = app.blog.get(xxh64(unquote(title)).hexdigest())
+    if all(
+            map(lambda x: req_blog["date"][x] == blog_date[x],
+                req_blog["date"])):
+        return json(req_blog)
+    else:
+        raise NotFound(f"Blog \"{unquote(title)}\" Not Found!")
+
+
+@app.listener("after_server_stop")
+async def close_db(app: Sanic, loop: Any) -> None:
+    """Save blog infomations after server stop."""
+    save_store_blog(app.blog)
+    save_store_tag(app.tag)
 
 
 if __name__ == '__main__':

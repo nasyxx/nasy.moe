@@ -58,9 +58,8 @@ from server.utils.str2path import s2p
 
 def clean_line(line: str) -> str:
     """Clean line."""
-    return line.replace("\n", "").replace("<",
-                                          "").replace(">",
-                                                      "").replace("#+", "")
+    return line.replace("\n", "").replace("<", "").replace(">", "").replace(
+        "#+", "")
 
 
 def get_org_info(line: str) -> Optional[BI]:
@@ -76,9 +75,9 @@ def get_org_info(line: str) -> Optional[BI]:
     elif kl == "date" and v:
         date = parse(v)
         return kl, {
-            "year": str(date.year),
-            "month": str(date.month),
-            "day": str(date.day)
+            "year": f"{date.year:4}",
+            "month": f"{date.month:02}",
+            "day": f"{date.day:02}"
         }
     return None
 
@@ -90,14 +89,11 @@ def org2tags(path: P) -> Tag:
     tag = Tag(C_POST, title = path.stem)
     with path.open() as f:
         return tag(
-            filter(
-                lambda x: x, [
-                    get_org_info(line)
-                    for line in takewhile(lambda x: x != "\n", f)
-                    if all(map(lambda x: x in line, {"#+", ":"}))
-                ]
-            )
-        )
+            filter(lambda x: x, [
+                get_org_info(line)
+                for line in takewhile(lambda x: x != "\n", f)
+                if all(map(lambda x: x in line, {"#+", ":"}))
+            ]))
 
 
 def emacs_daemon(do: str) -> bool:
@@ -106,16 +102,17 @@ def emacs_daemon(do: str) -> bool:
     Args:
         `do` -- "test", "start" or "stop"
 
-    "status" show the emacs daemon status, False if not started.
-    "start" start the emacs daemon and "stop" stop the emacs daemon.
+    "status" show the emacs daemon status, return `False` if not started.
+    "start" start the emacs daemon.
+    "stop" stop the emacs daemon.
     """
     if do == "status":
         if not subprocess.Popen(
-            "emacsclient -q --socket-name=org_to_html "
-            "-e '(message \"hi\")'",
-            shell = True,
-            stdout = subprocess.PIPE,
-            stderr = subprocess.PIPE,
+                "emacsclient -q --socket-name=org_to_html "
+                "-e '(message \"hi\")'",
+                shell = True,
+                stdout = subprocess.PIPE,
+                stderr = subprocess.PIPE,
         ).wait():
             logging.info("Already Started.")
             return True
@@ -123,10 +120,10 @@ def emacs_daemon(do: str) -> bool:
             return False
     elif do == "start":
         if not subprocess.Popen(
-            "emacs --no-desktop --daemon=org_to_html",
-            shell = True,
-            stdout = subprocess.PIPE,
-            stderr = subprocess.PIPE,
+                "emacs --no-desktop --daemon=org_to_html",
+                shell = True,
+                stdout = subprocess.PIPE,
+                stderr = subprocess.PIPE,
         ).wait():
             logging.info("Success start emacs daemon org_to_html")
             return True
@@ -135,10 +132,10 @@ def emacs_daemon(do: str) -> bool:
             return False
     elif do == "stop":
         if not subprocess.Popen(
-            "emacsclient --socket-name=org_to_html -e '(kill-emacs)'",
-            shell = True,
-            stdout = subprocess.PIPE,
-            stderr = subprocess.PIPE,
+                "emacsclient --socket-name=org_to_html -e '(kill-emacs)'",
+                shell = True,
+                stdout = subprocess.PIPE,
+                stderr = subprocess.PIPE,
         ).wait():
             logging.info("Success stop emacs daemon org_to_html")
             return True
@@ -146,11 +143,9 @@ def emacs_daemon(do: str) -> bool:
             logging.error("Failed to stop emacs daemon!")
             return False
     logging.error(
-        f"Unknow Command '{do}', must be one of 'test', 'start' and 'stop'"
-    )
+        f"Unknow Command '{do}', must be one of 'test', 'start' and 'stop'")
     raise RuntimeError(
-        f"Unknow Command '{do}', must be one of 'test', 'start' and 'stop'"
-    )
+        f"Unknow Command '{do}', must be one of 'test', 'start' and 'stop'")
     return False
 
 
@@ -190,12 +185,11 @@ def html_content_edit(raw_content: H_tag) -> Tuple[H_tag, H_tag, str]:
 
     ccount = Counter(content_notb.text)
     wordcount = str(
-        sum(ccount.values()) - sum([ccount[i] for i in ccount if i in NWORD])
-    )
+        sum(ccount.values()) - sum([ccount[i] for i in ccount if i in NWORD]))
 
     content = str(content_notb).replace(
-        "<table", "<div class='table_container'><table"
-    ).replace("/table>", "/table></div>")
+        "<table", "<div class='table_container'><table").replace(
+            "/table>", "/table></div>")
 
     return content, str(content_table), wordcount
 
@@ -213,17 +207,12 @@ def org2html(path: P) -> Dict[str, Union[H_str, str]]:
 
     return {
         k: v
-        for k, v
-        in zip(("content", "content_table", "wordcount", "hash", "id"),
-               chain(
-                   html_content_edit(
-                       bs4.BeautifulSoup(html_str, "lxml")
-                       .select("#content")[0]
-                   ), (
-                       xxh64(org_str).hexdigest(),
-                       xxh64(path.stem).hexdigest(),
-                   )
-               ))
+        for k, v in zip(("content", "content_table", "wordcount", "hash"),
+                        chain(
+                            html_content_edit(
+                                bs4.BeautifulSoup(html_str, "lxml")
+                                .select("#content")[0]), (
+                                    xxh64(org_str).hexdigest(),)))
     }
 
 
@@ -237,7 +226,11 @@ def org2blog(path: P) -> Tuple[BS, B]:
         emacs_daemon("start")
     blog.update(org2html(path))
     tag["wordcount"] = blog["wordcount"]
-    tag["id"] = blog["id"]
+    tag["blog_path"] = blog["blog_path"] = "/".join([
+        tag["date"]["year"], tag["date"]["month"], tag["date"]["day"],
+        tag["title"]
+    ])
+    tag["id"] = blog["id"] = xxh64(tag["title"]).hexdigest()
 
     return tag, blog
 
