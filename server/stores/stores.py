@@ -37,6 +37,7 @@ Excited without bugs::
 There are more things in heaven and earth, Horatio, than are dreamt.
  --  From "Hamlet"
 """
+from operator import itemgetter
 from pathlib import Path
 
 from server.types import BL, BST, P
@@ -50,7 +51,7 @@ except ModuleNotFoundError:
 
 def blog2ldict(blog: BL) -> BST:
     """Transform blog dict to list of dict."""
-    return list(blog.values())
+    return sorted(blog.values(), key = itemgetter("blog_path"))
 
 
 def ldict2blog(lblog: BST) -> BL:
