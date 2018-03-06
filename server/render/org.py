@@ -37,7 +37,6 @@ Excited without bugs::
 There are more things in heaven and earth, Horatio, than are dreamt.
  --  From "Hamlet"
 """
-import logging
 import re
 import subprocess
 from collections import Counter
@@ -50,6 +49,7 @@ from pendulum import parse
 from xxhash import xxh64
 
 from _config import C_POST
+from server.log.log import logger
 from server.models.blog import Blog, Tag
 from server.types import BI, BS, B, H_str, H_tag, P  # Type Alias
 from server.utils.const import NWORD
@@ -114,7 +114,7 @@ def emacs_daemon(do: str) -> bool:
                 stdout = subprocess.PIPE,
                 stderr = subprocess.PIPE,
         ).wait():
-            logging.info("Already Started.")
+            logger.info("Already Started.")
             return True
         else:
             return False
@@ -125,10 +125,10 @@ def emacs_daemon(do: str) -> bool:
                 stdout = subprocess.PIPE,
                 stderr = subprocess.PIPE,
         ).wait():
-            logging.info("Success start emacs daemon org_to_html")
+            logger.info("Success start emacs daemon org_to_html")
             return True
         else:
-            logging.error("Failed to start emacs daemon!")
+            logger.error("Failed to start emacs daemon!")
             return False
     elif do == "stop":
         if not subprocess.Popen(
@@ -137,12 +137,12 @@ def emacs_daemon(do: str) -> bool:
                 stdout = subprocess.PIPE,
                 stderr = subprocess.PIPE,
         ).wait():
-            logging.info("Success stop emacs daemon org_to_html")
+            logger.info("Success stop emacs daemon org_to_html")
             return True
         else:
-            logging.error("Failed to stop emacs daemon!")
+            logger.error("Failed to stop emacs daemon!")
             return False
-    logging.error(
+    logger.error(
         f"Unknow Command '{do}', must be one of 'test', 'start' and 'stop'")
     raise RuntimeError(
         f"Unknow Command '{do}', must be one of 'test', 'start' and 'stop'")
@@ -153,7 +153,7 @@ def org2html_file(path: P) -> Path:
     """Reander org file to html file."""
     if isinstance(path, str):
         path = s2p(path)
-    logging.info(f"exporting to html: {path}")
+    logger.info(f"exporting to html: {path}")
     subprocess.Popen(
         "emacsclient --socket-name=org_to_html "
         f"-e '(progn (find-file \"{path}\") "
@@ -211,8 +211,9 @@ def org2html(path: P) -> Dict[str, Union[H_str, str]]:
                         chain(
                             html_content_edit(
                                 bs4.BeautifulSoup(html_str, "lxml")
-                                .select("#content")[0]), (
-                                    xxh64(org_str).hexdigest(),)))
+                                .select("#content")[0]),
+                            (xxh64(org_str).hexdigest(),),
+                        ))
     }
 
 
@@ -232,6 +233,7 @@ def org2blog(path: P) -> Tuple[BS, B]:
     ])
     tag["id"] = blog["id"] = xxh64(tag["title"]).hexdigest()
 
+    logger.info(str(tag))
     return tag, blog
 
 

@@ -44,9 +44,11 @@ from server.types import BL, BST, P
 from server.utils.curring import curry
 
 try:
-    import ujson as json
+    json = __import__("ujson")
 except ModuleNotFoundError:
-    import json  # type: ignore
+    json = __import__("json")
+except ImportError:
+    json = __import__("json")
 
 
 def blog2ldict(blog: BL) -> BST:

@@ -43,6 +43,8 @@ try:
     json = __import__("ujson")
 except ModuleNotFoundError:
     json = __import__("json")
+except ImportError:
+    json = __import__("json")
 
 
 class Tag(Model):

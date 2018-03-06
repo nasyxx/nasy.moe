@@ -47,6 +47,7 @@ from sanic.response import json, redirect
 from xxhash import xxh64
 
 from server.exceptions import BlogNotFound
+from server.render.org import emacs_daemon
 from server.render.render import render_blogs
 from server.stores.stores import (ldict2blog, load_store_blog, load_store_tag,
                                   save_store_blog, save_store_tag)
@@ -131,7 +132,8 @@ async def close_db(app: Sanic, loop: Any) -> None:
     """Save blog infomations after server stop."""
     save_store_blog(app.blog)
     save_store_tag(app.tag)
+    emacs_daemon("stop")
 
 
 if __name__ == '__main__':
-    app.run(port = 1314)
+    app.run(host = "0.0.0.0", port = 1314)
