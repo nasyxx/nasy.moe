@@ -27,38 +27,37 @@ Excited without bugs::
     |  ______|______|______|______|______|______|_
     |  ___|______|______|______|______|______|____
 
-* author: Nasy https://nasy.moe <nasyxx>
+* author: Nasy https://nasy.moe <Nasy>
 * date: Feb 20, 2018
 * email: echo bmFzeXh4QGdtYWlsLmNvbQo= | base64 -D
-* filename: _config.py
-* Last modified time: Mar 2, 2018
+* filename: str2path.py
+* Last modified time: Mar 3, 2018
 * license: MIT
 
 There are more things in heaven and earth, Horatio, than are dreamt.
  --  From "Hamlet"
 """
-import pendulum
+from functools import lru_cache
+from pathlib import Path
 
-C_BLOG = dict(
-    # blog configuration
-    author = "Nasy",
-    title = "Nasy Land",
-    description = "Nasy 的花园～栽花、养鱼以及闲聊的地方w",
-    google_ana = "UA-102577027-1",
-)
-C_POST = dict(
-    # post default configuration
-    title = "",
-    author = "Nasy",
-    summary = "No Summary",
-    language = "en",
-    tags = ["blog"],
-    categories = ["Blog"],
-    date = {
-        "year": f"{pendulum.now().year:4}",
-        "month": f"{pendulum.now().month:02}",
-        "day": f"{pendulum.now().day:02}"
-    },
-    content = "",
-    content_table = "",
-)
+from nasymoe.types import P
+
+
+@lru_cache(maxsize = 65536)
+def s2p(path: P) -> Path:
+    """Turn string/Path to Path."""
+    assert any((isinstance(path, str), isinstance(path, Path))) is True
+    if isinstance(path, str):
+        return Path(path)
+    return path
+
+
+def main() -> None:
+    """Yooo, here is the main function."""
+    assert isinstance(s2p("test"), Path) is True
+    assert isinstance(s2p(Path("test")), Path) is True
+    print("s2p: pass")
+
+
+if __name__ == "__main__":
+    main()

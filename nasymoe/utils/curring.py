@@ -27,38 +27,35 @@ Excited without bugs::
     |  ______|______|______|______|______|______|_
     |  ___|______|______|______|______|______|____
 
-* author: Nasy https://nasy.moe <nasyxx>
-* date: Feb 20, 2018
+* author: Nasy https://nasy.moe <Nasy>
+* date: Feb 19, 2018
 * email: echo bmFzeXh4QGdtYWlsLmNvbQo= | base64 -D
-* filename: _config.py
-* Last modified time: Mar 2, 2018
+* filename: curring.py
+* Last modified time: Mar 3, 2018
 * license: MIT
 
 There are more things in heaven and earth, Horatio, than are dreamt.
  --  From "Hamlet"
 """
-import pendulum
+from functools import wraps
+from typing import Any, Callable
 
-C_BLOG = dict(
-    # blog configuration
-    author = "Nasy",
-    title = "Nasy Land",
-    description = "Nasy 的花园～栽花、养鱼以及闲聊的地方w",
-    google_ana = "UA-102577027-1",
-)
-C_POST = dict(
-    # post default configuration
-    title = "",
-    author = "Nasy",
-    summary = "No Summary",
-    language = "en",
-    tags = ["blog"],
-    categories = ["Blog"],
-    date = {
-        "year": f"{pendulum.now().year:4}",
-        "month": f"{pendulum.now().month:02}",
-        "day": f"{pendulum.now().day:02}"
-    },
-    content = "",
-    content_table = "",
-)
+
+def curry(func: Callable[..., Any]) -> Callable[..., Any]:
+    """Currying the function."""
+    assert func
+
+    @wraps(func)
+    def curried(*args: Any, **kwargs: Any) -> Any:
+        """Currying function wrap."""
+        if len(args) + len(kwargs) >= func.__code__.co_argcount:
+            return func(*args, **kwargs)
+
+        @wraps(func)
+        def new_curried(*args2: Any, **kwargs2: Any) -> Any:
+            """Curring function wrap's wrap."""
+            return curried(*(args + args2), **dict(kwargs, **kwargs2))
+
+        return new_curried
+
+    return curried

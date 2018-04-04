@@ -28,37 +28,12 @@ Excited without bugs::
     |  ___|______|______|______|______|______|____
 
 * author: Nasy https://nasy.moe <nasyxx>
-* date: Feb 20, 2018
+* date: Feb 21, 2018
 * email: echo bmFzeXh4QGdtYWlsLmNvbQo= | base64 -D
-* filename: _config.py
+* filename: __init__.py
 * Last modified time: Mar 2, 2018
 * license: MIT
 
 There are more things in heaven and earth, Horatio, than are dreamt.
  --  From "Hamlet"
 """
-import pendulum
-
-C_BLOG = dict(
-    # blog configuration
-    author = "Nasy",
-    title = "Nasy Land",
-    description = "Nasy 的花园～栽花、养鱼以及闲聊的地方w",
-    google_ana = "UA-102577027-1",
-)
-C_POST = dict(
-    # post default configuration
-    title = "",
-    author = "Nasy",
-    summary = "No Summary",
-    language = "en",
-    tags = ["blog"],
-    categories = ["Blog"],
-    date = {
-        "year": f"{pendulum.now().year:4}",
-        "month": f"{pendulum.now().month:02}",
-        "day": f"{pendulum.now().day:02}"
-    },
-    content = "",
-    content_table = "",
-)

@@ -27,38 +27,17 @@ Excited without bugs::
     |  ______|______|______|______|______|______|_
     |  ___|______|______|______|______|______|____
 
-* author: Nasy https://nasy.moe <nasyxx>
-* date: Feb 20, 2018
+* author: Nasy https://nasy.moe <Nasy>
+* date: Feb 21, 2018
 * email: echo bmFzeXh4QGdtYWlsLmNvbQo= | base64 -D
-* filename: _config.py
-* Last modified time: Mar 2, 2018
+* filename: const.py
+* Last modified time: Mar 3, 2018
 * license: MIT
 
 There are more things in heaven and earth, Horatio, than are dreamt.
  --  From "Hamlet"
 """
-import pendulum
-
-C_BLOG = dict(
-    # blog configuration
-    author = "Nasy",
-    title = "Nasy Land",
-    description = "Nasy 的花园～栽花、养鱼以及闲聊的地方w",
-    google_ana = "UA-102577027-1",
-)
-C_POST = dict(
-    # post default configuration
-    title = "",
-    author = "Nasy",
-    summary = "No Summary",
-    language = "en",
-    tags = ["blog"],
-    categories = ["Blog"],
-    date = {
-        "year": f"{pendulum.now().year:4}",
-        "month": f"{pendulum.now().month:02}",
-        "day": f"{pendulum.now().day:02}"
-    },
-    content = "",
-    content_table = "",
-)
+NWORD = set(("1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
+             "+-=_[]{}.,。，？?$()（）【】「」『』!！！～~*/&%\"\'“”‘’\n\t<>``\\;:；："
+             "@#%^&|"))
+NWORD.add("")
