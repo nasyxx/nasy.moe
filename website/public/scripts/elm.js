@@ -11342,8 +11342,8 @@ var _user$project$Msgs$OnFetchBlog = function (a) {
 	return {ctor: 'OnFetchBlog', _0: a};
 };
 
-var _user$project$Commands$blogs_url = 'http://api.nasy.moe/blogs';
-var _user$project$Commands$blog_url = 'http://api.nasy.moe/blog/';
+var _user$project$Commands$blogs_url = 'http://api.nasy.moe:1314/blogs';
+var _user$project$Commands$blog_url = 'http://api.nasy.moe:1314/blog/';
 var _user$project$Commands$date_decoder = A3(
 	_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
 	'day',
