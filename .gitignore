@@ -60,4 +60,4 @@ target/
 .ropeproject
 elm-stuff
 .stores
-public
+public/*
