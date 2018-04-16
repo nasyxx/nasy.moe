@@ -42,10 +42,52 @@ There are more things in heaven and earth, Horatio, than are dreamt.
     <head>
         <meta charset="utf-8">
         <title>Title</title>
+        <link rel="stylesheet" href="/styles/main.css">
     </head>
 
     <body>
-        <script src="/scripts/elm.js"></script>
+        <div id="container"></div>
+        <script src="/scripts/elm.js" charset="utf-8"></script>
+
+        <!-- highlight -->
+        <!-- No iear, why I cannot use the local one as soon as possible. -->
+        <script src="/scripts/highlight.pack.js" charset="utf-8"></script>
+        <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script> -->
+
+        <!-- momentjs -->
+        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.0/moment.min.js"></script>
+
+
+        <!-- fontawesome -->
+        <script async defer src="/scripts/fa-brands.min.js"></script>
+        <script async defer src="/scripts/fa-solid.min.js"></script>
+        <script async defer src="/scripts/fa-regular.min.js"></script>
+        <script async defer src="/scripts/fontawesome.min.js"></script>
+
+        <!-- MathJax -->
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({
+            displayAlign: "center",
+            displayIndent: "0em",
+            "HTML-CSS": { scale: 100, linebreaks: { automatic: "false" }, webFont: "TeX" },
+            SVG: { scale: 100, linebreaks: { automatic: "false" }, font      : "TeX" },
+            NativeMML: { scale: 100 },
+            TeX: {
+                equationNumbers: {
+                    autoNumber: "AMS"
+                },
+                MultLineWidth: "85%",
+                TagSide: "right",
+                TagIndent: ".8em"
+            },
+            tex2jax: { inlineMath: [
+                    ['$', '$'],
+                    ['\\(', '\\)']
+                ] }
+            });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
         <script src="/scripts/main.js" charset="utf-8"></script>
     </body>
 

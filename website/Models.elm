@@ -55,7 +55,7 @@ init_model : Flag -> Model
 init_model flag =
     { blogs = RemoteData.Loading
     , blog = RemoteData.Loading
-    , settings = { title = "Nasy Land", location = flag, route = Normal }
+    , settings = { title = "Nasy Land", location = flag, route = Normal, nav = { f = True, n = False } }
     }
 
 
@@ -82,6 +82,10 @@ type alias BlogModel =
     , wordcount : String
     , blog_path : String
     , id : String
+    , last : String
+    , last_name : String
+    , next : String
+    , next_name : String
     , content : String
     , content_table : String
     }
@@ -96,7 +100,7 @@ type alias BlogPath =
 
 
 type alias Settings =
-    { location : Location, title : String, route : Route }
+    { location : Location, title : String, route : Route, nav : { f : Bool, n : Bool } }
 
 
 type Route

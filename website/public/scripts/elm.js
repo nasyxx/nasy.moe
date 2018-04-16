@@ -11286,7 +11286,15 @@ var _user$project$Models$BlogModel = function (a) {
 										return function (k) {
 											return function (l) {
 												return function (m) {
-													return {title: a, author: b, summary: c, language: d, tags: e, categories: f, date: g, datetime: h, wordcount: i, blog_path: j, id: k, content: l, content_table: m};
+													return function (n) {
+														return function (o) {
+															return function (p) {
+																return function (q) {
+																	return {title: a, author: b, summary: c, language: d, tags: e, categories: f, date: g, datetime: h, wordcount: i, blog_path: j, id: k, last: l, last_name: m, next: n, next_name: o, content: p, content_table: q};
+																};
+															};
+														};
+													};
 												};
 											};
 										};
@@ -11300,9 +11308,9 @@ var _user$project$Models$BlogModel = function (a) {
 		};
 	};
 };
-var _user$project$Models$Settings = F3(
-	function (a, b, c) {
-		return {location: a, title: b, route: c};
+var _user$project$Models$Settings = F4(
+	function (a, b, c, d) {
+		return {location: a, title: b, route: c, nav: d};
 	});
 var _user$project$Models$NotFoundRoute = {ctor: 'NotFoundRoute'};
 var _user$project$Models$BlogRoute = {ctor: 'BlogRoute'};
@@ -11311,11 +11319,18 @@ var _user$project$Models$init_model = function (flag) {
 	return {
 		blogs: _krisajenkins$remotedata$RemoteData$Loading,
 		blog: _krisajenkins$remotedata$RemoteData$Loading,
-		settings: {title: 'Nasy Land', location: flag, route: _user$project$Models$Normal}
+		settings: {
+			title: 'Nasy Land',
+			location: flag,
+			route: _user$project$Models$Normal,
+			nav: {f: true, n: false}
+		}
 	};
 };
 
 var _user$project$Msgs$Up2Top = {ctor: 'Up2Top'};
+var _user$project$Msgs$ChangeNavN = {ctor: 'ChangeNavN'};
+var _user$project$Msgs$ChangeNavF = {ctor: 'ChangeNavF'};
 var _user$project$Msgs$OnLocationChange = {ctor: 'OnLocationChange'};
 var _user$project$Msgs$SetUrl = function (a) {
 	return {ctor: 'SetUrl', _0: a};
@@ -11327,8 +11342,8 @@ var _user$project$Msgs$OnFetchBlog = function (a) {
 	return {ctor: 'OnFetchBlog', _0: a};
 };
 
-var _user$project$Commands$blogs_url = 'http://new.nasy.moe:1314/blogs';
-var _user$project$Commands$blog_url = 'http://new.nasy.moe:1314/blog/';
+var _user$project$Commands$blogs_url = 'http://api.nasy.moe/blogs';
+var _user$project$Commands$blog_url = 'http://api.nasy.moe/blog/';
 var _user$project$Commands$date_decoder = A3(
 	_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
 	'day',
@@ -11352,51 +11367,71 @@ var _user$project$Commands$main_decoder = A4(
 		'content',
 		_elm_lang$core$Json_Decode$string,
 		'',
-		A3(
-			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-			'id',
+		A4(
+			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
+			'next_name',
 			_elm_lang$core$Json_Decode$string,
-			A3(
-				_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-				'blog_path',
+			'',
+			A4(
+				_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
+				'next',
 				_elm_lang$core$Json_Decode$string,
-				A3(
-					_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-					'wordcount',
+				'',
+				A4(
+					_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
+					'last_name',
 					_elm_lang$core$Json_Decode$string,
-					A3(
-						_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-						'datetime',
+					'',
+					A4(
+						_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
+						'last',
 						_elm_lang$core$Json_Decode$string,
+						'',
 						A3(
 							_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-							'date',
-							_user$project$Commands$date_decoder,
+							'id',
+							_elm_lang$core$Json_Decode$string,
 							A3(
 								_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-								'categories',
-								_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$string),
+								'blog_path',
+								_elm_lang$core$Json_Decode$string,
 								A3(
 									_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-									'tags',
-									_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$string),
+									'wordcount',
+									_elm_lang$core$Json_Decode$string,
 									A3(
 										_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-										'language',
+										'datetime',
 										_elm_lang$core$Json_Decode$string,
 										A3(
 											_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-											'summary',
-											_elm_lang$core$Json_Decode$string,
+											'date',
+											_user$project$Commands$date_decoder,
 											A3(
 												_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-												'author',
-												_elm_lang$core$Json_Decode$string,
+												'categories',
+												_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$string),
 												A3(
 													_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-													'title',
-													_elm_lang$core$Json_Decode$string,
-													_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Models$BlogModel))))))))))))));
+													'tags',
+													_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$string),
+													A3(
+														_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+														'language',
+														_elm_lang$core$Json_Decode$string,
+														A3(
+															_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+															'summary',
+															_elm_lang$core$Json_Decode$string,
+															A3(
+																_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+																'author',
+																_elm_lang$core$Json_Decode$string,
+																A3(
+																	_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+																	'title',
+																	_elm_lang$core$Json_Decode$string,
+																	_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Models$BlogModel))))))))))))))))));
 var _user$project$Commands$blog_decoder = A2(_elm_lang$core$Json_Decode$field, 'results', _user$project$Commands$main_decoder);
 var _user$project$Commands$fetch_blog = function (blog_path) {
 	return A2(
@@ -11600,6 +11635,56 @@ var _user$project$Update$update = F2(
 							return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 					}
 				}
+			case 'ChangeNavF':
+				var navf = function () {
+					var _p12 = model.settings.nav.f;
+					if (_p12 === true) {
+						return false;
+					} else {
+						return true;
+					}
+				}();
+				var old_settings = model.settings;
+				var old_nav = old_settings.nav;
+				var settings = _elm_lang$core$Native_Utils.update(
+					old_settings,
+					{
+						nav: _elm_lang$core$Native_Utils.update(
+							old_nav,
+							{f: navf})
+					});
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{settings: settings}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'ChangeNavN':
+				var navn = function () {
+					var _p13 = model.settings.nav.n;
+					if (_p13 === true) {
+						return false;
+					} else {
+						return true;
+					}
+				}();
+				var old_settings = model.settings;
+				var old_nav = old_settings.nav;
+				var settings = _elm_lang$core$Native_Utils.update(
+					old_settings,
+					{
+						nav: _elm_lang$core$Native_Utils.update(
+							old_nav,
+							{n: navn})
+					});
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{settings: settings}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
 			default:
 				return {
 					ctor: '_Tuple2',
@@ -11609,6 +11694,33 @@ var _user$project$Update$update = F2(
 		}
 	});
 
+var _user$project$Views$icon = F2(
+	function (ss, tt) {
+		return A2(
+			_elm_lang$html$Html$i,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class(
+					A2(_elm_lang$core$Basics_ops['++'], 'icon ', ss)),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$title(tt),
+					_1: {ctor: '[]'}
+				}
+			},
+			{ctor: '[]'});
+	});
+var _user$project$Views$bhref = F2(
+	function (url, title) {
+		return _elm_lang$html$Html_Attributes$href(
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				'/blog/',
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					url,
+					A2(_elm_lang$core$Basics_ops['++'], '#', title))));
+	});
 var _user$project$Views$text_html = F3(
 	function (node_string, attributes, html_string) {
 		return A3(
@@ -11700,23 +11812,23 @@ var _user$project$Views$tag_view = function (blog) {
 				{
 					ctor: '::',
 					_0: _elm_lang$html$Html_Attributes$class('tags-author'),
-					_1: {
-						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$class('fas fa-pencil-alt'),
-						_1: {ctor: '[]'}
-					}
+					_1: {ctor: '[]'}
 				},
 				{
 					ctor: '::',
-					_0: A2(
-						_elm_lang$html$Html$span,
-						{ctor: '[]'},
-						{
-							ctor: '::',
-							_0: _elm_lang$html$Html$text(blog.author),
-							_1: {ctor: '[]'}
-						}),
-					_1: {ctor: '[]'}
+					_0: A2(_user$project$Views$icon, 'fas fa-pencil-alt', 'author'),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$span,
+							{ctor: '[]'},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text(blog.author),
+								_1: {ctor: '[]'}
+							}),
+						_1: {ctor: '[]'}
+					}
 				}),
 			_1: {
 				ctor: '::',
@@ -11729,15 +11841,19 @@ var _user$project$Views$tag_view = function (blog) {
 					},
 					{
 						ctor: '::',
-						_0: A2(
-							_elm_lang$html$Html$time,
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$datetime(blog.datetime),
-								_1: {ctor: '[]'}
-							},
-							{ctor: '[]'}),
-						_1: {ctor: '[]'}
+						_0: A2(_user$project$Views$icon, 'far fa-calendar-alt', 'time'),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$time,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$datetime(blog.datetime),
+									_1: {ctor: '[]'}
+								},
+								{ctor: '[]'}),
+							_1: {ctor: '[]'}
+						}
 					}),
 				_1: {
 					ctor: '::',
@@ -11746,19 +11862,35 @@ var _user$project$Views$tag_view = function (blog) {
 						{
 							ctor: '::',
 							_0: _elm_lang$html$Html_Attributes$class('tags-summary'),
-							_1: {ctor: '[]'}
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$class(
+									function () {
+										var _p0 = blog.summary;
+										if (_p0 === 'No Summary') {
+											return 'hidden';
+										} else {
+											return '';
+										}
+									}()),
+								_1: {ctor: '[]'}
+							}
 						},
 						{
 							ctor: '::',
-							_0: A2(
-								_elm_lang$html$Html$span,
-								{ctor: '[]'},
-								{
-									ctor: '::',
-									_0: _elm_lang$html$Html$text(blog.summary),
-									_1: {ctor: '[]'}
-								}),
-							_1: {ctor: '[]'}
+							_0: A2(_user$project$Views$icon, 'fas fa-quote-left', 'summary'),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$span,
+									{ctor: '[]'},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text(blog.summary),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}
 						}),
 					_1: {
 						ctor: '::',
@@ -11771,8 +11903,12 @@ var _user$project$Views$tag_view = function (blog) {
 							},
 							{
 								ctor: '::',
-								_0: A2(_user$project$Views$tag_list, 'categories', blog.categories),
-								_1: {ctor: '[]'}
+								_0: A2(_user$project$Views$icon, 'fas fa-tags', 'categories'),
+								_1: {
+									ctor: '::',
+									_0: A2(_user$project$Views$tag_list, 'categories', blog.categories),
+									_1: {ctor: '[]'}
+								}
 							}),
 						_1: {
 							ctor: '::',
@@ -11785,8 +11921,12 @@ var _user$project$Views$tag_view = function (blog) {
 								},
 								{
 									ctor: '::',
-									_0: A2(_user$project$Views$tag_list, 'tag', blog.tags),
-									_1: {ctor: '[]'}
+									_0: A2(_user$project$Views$icon, 'fas fa-hashtag', 'tags'),
+									_1: {
+										ctor: '::',
+										_0: A2(_user$project$Views$tag_list, 'tag', blog.tags),
+										_1: {ctor: '[]'}
+									}
 								}),
 							_1: {ctor: '[]'}
 						}
@@ -11799,50 +11939,65 @@ var _user$project$Views$blogs_list_single = function (blog) {
 	return {
 		ctor: '::',
 		_0: A2(
-			_elm_lang$html$Html$header,
+			_elm_lang$html$Html$article,
 			{
 				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class('blogs-list-header'),
+				_0: _elm_lang$html$Html_Attributes$class('blogs-list-article'),
 				_1: {ctor: '[]'}
 			},
 			{
 				ctor: '::',
 				_0: A2(
-					_elm_lang$html$Html$a,
+					_elm_lang$html$Html$header,
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$href(
-							A2(_elm_lang$core$Basics_ops['++'], '/blog/', blog.blog_path)),
+						_0: _elm_lang$html$Html_Attributes$class('blogs-list-header'),
 						_1: {ctor: '[]'}
 					},
 					{
 						ctor: '::',
 						_0: A2(
-							_elm_lang$html$Html$h3,
-							{ctor: '[]'},
+							_elm_lang$html$Html$a,
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html$text(blog.title),
+								_0: A2(_user$project$Views$bhref, blog.blog_path, blog.title),
+								_1: {ctor: '[]'}
+							},
+							{
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$h3,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$id(blog.title),
+										_1: {ctor: '[]'}
+									},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text(blog.title),
+										_1: {ctor: '[]'}
+									}),
 								_1: {ctor: '[]'}
 							}),
 						_1: {ctor: '[]'}
 					}),
-				_1: {ctor: '[]'}
+				_1: {
+					ctor: '::',
+					_0: _user$project$Views$tag_view(blog),
+					_1: {ctor: '[]'}
+				}
 			}),
-		_1: {
-			ctor: '::',
-			_0: _user$project$Views$tag_view(blog),
-			_1: {ctor: '[]'}
-		}
+		_1: {ctor: '[]'}
 	};
 };
 var _user$project$Views$blogs_list = function (blogs) {
-	return _elm_lang$core$List$concat(
-		A2(_elm_lang$core$List$map, _user$project$Views$blogs_list_single, blogs));
+	return _elm_lang$core$List$reverse(
+		_elm_lang$core$List$concat(
+			A2(_elm_lang$core$List$map, _user$project$Views$blogs_list_single, blogs)));
 };
 var _user$project$Views$blogs_view = function (res) {
-	var _p0 = res;
-	switch (_p0.ctor) {
+	var _p1 = res;
+	switch (_p1.ctor) {
 		case 'NotAsked':
 			return A2(
 				_elm_lang$html$Html$div,
@@ -11877,49 +12032,354 @@ var _user$project$Views$blogs_view = function (res) {
 						_1: {ctor: '[]'}
 					}
 				},
-				_user$project$Views$blogs_list(_p0._0));
+				_user$project$Views$blogs_list(_p1._0));
 		default:
 			return _elm_lang$html$Html$text(
-				_elm_lang$core$Basics$toString(_p0._0));
+				_elm_lang$core$Basics$toString(_p1._0));
 	}
 };
-var _user$project$Views$blog_ = function (blog) {
-	return {
-		ctor: '::',
-		_0: A2(
-			_elm_lang$html$Html$header,
-			{
-				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class('blog-header'),
-				_1: {ctor: '[]'}
-			},
-			{
-				ctor: '::',
-				_0: _user$project$Views$tag_view(blog),
-				_1: {ctor: '[]'}
-			}),
-		_1: {
+var _user$project$Views$blog_ = F2(
+	function (blog, nav_) {
+		var next = function () {
+			var _p2 = blog.next;
+			if (_p2 === '') {
+				return true;
+			} else {
+				return false;
+			}
+		}();
+		var last = function () {
+			var _p3 = blog.last;
+			if (_p3 === '') {
+				return true;
+			} else {
+				return false;
+			}
+		}();
+		return {
 			ctor: '::',
-			_0: A3(
-				_user$project$Views$text_html,
-				'section',
+			_0: A2(
+				_elm_lang$html$Html$header,
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$id('blog-content'),
+					_0: _elm_lang$html$Html_Attributes$class('blog-header'),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$h1,
+						{ctor: '[]'},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text(blog.title),
+							_1: {ctor: '[]'}
+						}),
 					_1: {
 						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$class('blog-content'),
-						_1: {ctor: '[]'}
+						_0: A2(
+							_elm_lang$html$Html$section,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Events$onClick(_user$project$Msgs$ChangeNavN),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('toc-n'),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$style(
+											{
+												ctor: '::',
+												_0: {ctor: '_Tuple2', _0: 'cursor', _1: 'context-menu'},
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									}
+								}
+							},
+							{
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$h3,
+									{ctor: '[]'},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text('Table of Content'),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A3(
+								_user$project$Views$text_html,
+								'section',
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('blog-content-table'),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$classList(
+											{
+												ctor: '::',
+												_0: {ctor: '_Tuple2', _0: 'hidden', _1: nav_.n},
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									}
+								},
+								blog.content_table),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$div,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$style(
+											{
+												ctor: '::',
+												_0: {ctor: '_Tuple2', _0: 'appearance', _1: 'h1'},
+												_1: {ctor: '[]'}
+											}),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$classList(
+												{
+													ctor: '::',
+													_0: {ctor: '_Tuple2', _0: 'hidden', _1: true},
+													_1: {
+														ctor: '::',
+														_0: {ctor: '_Tuple2', _0: 'h1-fixed', _1: true},
+														_1: {
+															ctor: '::',
+															_0: {ctor: '_Tuple2', _0: 'opacity', _1: true},
+															_1: {ctor: '[]'}
+														}
+													}
+												}),
+											_1: {ctor: '[]'}
+										}
+									},
+									{
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html$p,
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$class('h1 h1-fixed'),
+												_1: {
+													ctor: '::',
+													_0: _elm_lang$html$Html_Events$onClick(_user$project$Msgs$ChangeNavF),
+													_1: {
+														ctor: '::',
+														_0: _elm_lang$html$Html_Attributes$style(
+															{
+																ctor: '::',
+																_0: {ctor: '_Tuple2', _0: 'position', _1: 'fixed'},
+																_1: {
+																	ctor: '::',
+																	_0: {ctor: '_Tuple2', _0: 'cursor', _1: 'context-menu'},
+																	_1: {
+																		ctor: '::',
+																		_0: {ctor: '_Tuple2', _0: 'z-index', _1: '3'},
+																		_1: {ctor: '[]'}
+																	}
+																}
+															}),
+														_1: {ctor: '[]'}
+													}
+												}
+											},
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html$text(blog.title),
+												_1: {ctor: '[]'}
+											}),
+										_1: {
+											ctor: '::',
+											_0: A3(
+												_user$project$Views$text_html,
+												'section',
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html_Attributes$class('blog-content-table h1-fixed'),
+													_1: {
+														ctor: '::',
+														_0: _elm_lang$html$Html_Attributes$classList(
+															{
+																ctor: '::',
+																_0: {ctor: '_Tuple2', _0: 'hidden', _1: nav_.f},
+																_1: {ctor: '[]'}
+															}),
+														_1: {
+															ctor: '::',
+															_0: _elm_lang$html$Html_Attributes$style(
+																{
+																	ctor: '::',
+																	_0: {ctor: '_Tuple2', _0: 'position', _1: 'fixed'},
+																	_1: {
+																		ctor: '::',
+																		_0: {ctor: '_Tuple2', _0: 'z-index', _1: '2'},
+																		_1: {
+																			ctor: '::',
+																			_0: {ctor: '_Tuple2', _0: 'top', _1: '50px'},
+																			_1: {
+																				ctor: '::',
+																				_0: {ctor: '_Tuple2', _0: 'border-top', _1: 'none'},
+																				_1: {
+																					ctor: '::',
+																					_0: {ctor: '_Tuple2', _0: 'box-shadow', _1: 'none'},
+																					_1: {ctor: '[]'}
+																				}
+																			}
+																		}
+																	}
+																}),
+															_1: {ctor: '[]'}
+														}
+													}
+												},
+												blog.content_table),
+											_1: {ctor: '[]'}
+										}
+									}),
+								_1: {
+									ctor: '::',
+									_0: _user$project$Views$tag_view(blog),
+									_1: {ctor: '[]'}
+								}
+							}
+						}
 					}
-				},
-				blog.content),
-			_1: {ctor: '[]'}
-		}
-	};
-};
-var _user$project$Views$blog_view = function (res) {
-	var _p1 = res;
-	switch (_p1.ctor) {
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$article,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$class('blog-article'),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: A3(
+							_user$project$Views$text_html,
+							'section',
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$id('blog-content'),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('blog-content'),
+									_1: {ctor: '[]'}
+								}
+							},
+							blog.content),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$section,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$id('blog-content-nav'),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$nav,
+										{ctor: '[]'},
+										{
+											ctor: '::',
+											_0: A2(
+												_elm_lang$html$Html$ul,
+												{ctor: '[]'},
+												{
+													ctor: '::',
+													_0: A2(
+														_elm_lang$html$Html$li,
+														{
+															ctor: '::',
+															_0: _elm_lang$html$Html_Attributes$id('blog-content-nav-last'),
+															_1: {
+																ctor: '::',
+																_0: _elm_lang$html$Html_Attributes$classList(
+																	{
+																		ctor: '::',
+																		_0: {ctor: '_Tuple2', _0: 'hidden', _1: last},
+																		_1: {ctor: '[]'}
+																	}),
+																_1: {ctor: '[]'}
+															}
+														},
+														{
+															ctor: '::',
+															_0: A2(
+																_elm_lang$html$Html$a,
+																{
+																	ctor: '::',
+																	_0: A2(_user$project$Views$bhref, blog.last, blog.last_name),
+																	_1: {ctor: '[]'}
+																},
+																{
+																	ctor: '::',
+																	_0: _elm_lang$html$Html$text(blog.last_name),
+																	_1: {ctor: '[]'}
+																}),
+															_1: {ctor: '[]'}
+														}),
+													_1: {
+														ctor: '::',
+														_0: A2(
+															_elm_lang$html$Html$li,
+															{
+																ctor: '::',
+																_0: _elm_lang$html$Html_Attributes$id('blog-content-nav-next'),
+																_1: {
+																	ctor: '::',
+																	_0: _elm_lang$html$Html_Attributes$classList(
+																		{
+																			ctor: '::',
+																			_0: {ctor: '_Tuple2', _0: 'hidden', _1: next},
+																			_1: {ctor: '[]'}
+																		}),
+																	_1: {ctor: '[]'}
+																}
+															},
+															{
+																ctor: '::',
+																_0: A2(
+																	_elm_lang$html$Html$a,
+																	{
+																		ctor: '::',
+																		_0: A2(_user$project$Views$bhref, blog.next, blog.next_name),
+																		_1: {ctor: '[]'}
+																	},
+																	{
+																		ctor: '::',
+																		_0: _elm_lang$html$Html$text(blog.next_name),
+																		_1: {ctor: '[]'}
+																	}),
+																_1: {ctor: '[]'}
+															}),
+														_1: {ctor: '[]'}
+													}
+												}),
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						}
+					}),
+				_1: {ctor: '[]'}
+			}
+		};
+	});
+var _user$project$Views$blog_view = function (model) {
+	var _p4 = model.blog;
+	switch (_p4.ctor) {
 		case 'NotAsked':
 			return A2(
 				_elm_lang$html$Html$div,
@@ -11954,11 +12414,139 @@ var _user$project$Views$blog_view = function (res) {
 						_1: {ctor: '[]'}
 					}
 				},
-				_user$project$Views$blog_(_p1._0));
+				A2(_user$project$Views$blog_, _p4._0, model.settings.nav));
 		default:
 			return _elm_lang$html$Html$text(
-				_elm_lang$core$Basics$toString(_p1._0));
+				_elm_lang$core$Basics$toString(_p4._0));
 	}
+};
+var _user$project$Views$find_me = function (base) {
+	return {
+		ctor: '::',
+		_0: A2(
+			_elm_lang$html$Html$p,
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html$text('Find me on '),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$a,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$href('https://github.com/nasyxx'),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$title('GitHub'),
+								_1: {ctor: '[]'}
+							}
+						},
+						{
+							ctor: '::',
+							_0: A2(_user$project$Views$icon, 'fab fa-github', 'GitHub'),
+							_1: {ctor: '[]'}
+						}),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html$text(', '),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$a,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$href('https://twitter.com/nasyxx'),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$title('Twitter'),
+										_1: {ctor: '[]'}
+									}
+								},
+								{
+									ctor: '::',
+									_0: A2(_user$project$Views$icon, 'fab fa-twitter', 'Twitter'),
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html$text(' and '),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$a,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$href('mailto:nasyxx+nasymoe@gmail.com?Subject=Hi%20Nasy'),
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: A2(_user$project$Views$icon, 'fas fa-envelope', 'Mail'),
+											_1: {ctor: '[]'}
+										}),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html$text('.'),
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						}
+					}
+				}
+			}),
+		_1: {ctor: '[]'}
+	};
+};
+var _user$project$Views$friend_links = function (base) {
+	var cc = {
+		ctor: '::',
+		_0: _elm_lang$html$Html_Attributes$class(
+			A2(_elm_lang$core$Basics_ops['++'], base, '-section-nav-list nav-list')),
+		_1: {ctor: '[]'}
+	};
+	return {
+		ctor: '::',
+		_0: A2(
+			_elm_lang$html$Html$nav,
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$ul,
+					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$li,
+							cc,
+							{
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$a,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$href('https://laobubu.net'),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$title('laobubu'),
+											_1: {ctor: '[]'}
+										}
+									},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text('Laobubu'),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}),
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			}),
+		_1: {ctor: '[]'}
+	};
 };
 var _user$project$Views$nav_view = function (base) {
 	return {
@@ -11975,37 +12563,9 @@ var _user$project$Views$nav_view = function (base) {
 				_0: A2(
 					_elm_lang$html$Html$ul,
 					{ctor: '[]'},
-					{
-						ctor: '::',
-						_0: A2(
-							_elm_lang$html$Html$li,
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$class(
-									A2(_elm_lang$core$Basics_ops['++'], base, '-section-nav-list nav-list')),
-								_1: {ctor: '[]'}
-							},
-							{
-								ctor: '::',
-								_0: A2(
-									_elm_lang$html$Html$a,
-									{
-										ctor: '::',
-										_0: _elm_lang$html$Html_Attributes$href('https://nasy.me'),
-										_1: {
-											ctor: '::',
-											_0: _elm_lang$html$Html_Attributes$title('Who is Nasy?'),
-											_1: {ctor: '[]'}
-										}
-									},
-									{
-										ctor: '::',
-										_0: _elm_lang$html$Html$text('Nasy'),
-										_1: {ctor: '[]'}
-									}),
-								_1: {ctor: '[]'}
-							}),
-						_1: {
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						{
 							ctor: '::',
 							_0: A2(
 								_elm_lang$html$Html$li,
@@ -12021,16 +12581,16 @@ var _user$project$Views$nav_view = function (base) {
 										_elm_lang$html$Html$a,
 										{
 											ctor: '::',
-											_0: _elm_lang$html$Html_Attributes$href('/'),
+											_0: _elm_lang$html$Html_Attributes$href('https://nasy.me'),
 											_1: {
 												ctor: '::',
-												_0: _elm_lang$html$Html_Attributes$title('Blog'),
+												_0: _elm_lang$html$Html_Attributes$title('Who is Nasy?'),
 												_1: {ctor: '[]'}
 											}
 										},
 										{
 											ctor: '::',
-											_0: _elm_lang$html$Html$text('Blog'),
+											_0: _elm_lang$html$Html$text('Nasy'),
 											_1: {ctor: '[]'}
 										}),
 									_1: {ctor: '[]'}
@@ -12051,16 +12611,16 @@ var _user$project$Views$nav_view = function (base) {
 											_elm_lang$html$Html$a,
 											{
 												ctor: '::',
-												_0: _elm_lang$html$Html_Attributes$href('https://github.com/nasyxx'),
+												_0: _elm_lang$html$Html_Attributes$href('/'),
 												_1: {
 													ctor: '::',
-													_0: _elm_lang$html$Html_Attributes$title('GitHub'),
+													_0: _elm_lang$html$Html_Attributes$title('Blog'),
 													_1: {ctor: '[]'}
 												}
 											},
 											{
 												ctor: '::',
-												_0: _elm_lang$html$Html$text('GitHub'),
+												_0: _elm_lang$html$Html$text('Blog'),
 												_1: {ctor: '[]'}
 											}),
 										_1: {ctor: '[]'}
@@ -12081,56 +12641,56 @@ var _user$project$Views$nav_view = function (base) {
 												_elm_lang$html$Html$a,
 												{
 													ctor: '::',
-													_0: _elm_lang$html$Html_Attributes$href('https://twitter.com/nasyxx'),
+													_0: _elm_lang$html$Html_Attributes$href('https://pools.nasy.moe'),
 													_1: {
 														ctor: '::',
-														_0: _elm_lang$html$Html_Attributes$title('Twitter'),
+														_0: _elm_lang$html$Html_Attributes$title('Pools'),
 														_1: {ctor: '[]'}
 													}
 												},
 												{
 													ctor: '::',
-													_0: _elm_lang$html$Html$text('Twitter'),
+													_0: _elm_lang$html$Html$text('Pools'),
 													_1: {ctor: '[]'}
 												}),
 											_1: {ctor: '[]'}
 										}),
-									_1: {
-										ctor: '::',
-										_0: A2(
-											_elm_lang$html$Html$li,
-											{
-												ctor: '::',
-												_0: _elm_lang$html$Html_Attributes$class(
-													A2(_elm_lang$core$Basics_ops['++'], base, '-section-nav-list nav-list')),
-												_1: {ctor: '[]'}
-											},
-											{
-												ctor: '::',
-												_0: A2(
-													_elm_lang$html$Html$a,
-													{
-														ctor: '::',
-														_0: _elm_lang$html$Html_Attributes$href('/more'),
-														_1: {
-															ctor: '::',
-															_0: _elm_lang$html$Html_Attributes$title('More'),
-															_1: {ctor: '[]'}
-														}
-													},
-													{
-														ctor: '::',
-														_0: _elm_lang$html$Html$text('More'),
-														_1: {ctor: '[]'}
-													}),
-												_1: {ctor: '[]'}
-											}),
-										_1: {ctor: '[]'}
-									}
+									_1: {ctor: '[]'}
 								}
 							}
-						}
-					}),
+						},
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$li,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class(
+										A2(_elm_lang$core$Basics_ops['++'], base, '-section-nav-list nav-list')),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$a,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$href('/more'),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$title('More'),
+												_1: {ctor: '[]'}
+											}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('More'),
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						})),
 				_1: {ctor: '[]'}
 			}),
 		_1: {ctor: '[]'}
@@ -12157,34 +12717,100 @@ var _user$project$Views$footer_view = {
 			_0: _elm_lang$html$Html_Attributes$class('footer-section'),
 			_1: {ctor: '[]'}
 		},
-		{
-			ctor: '::',
-			_0: A2(
-				_elm_lang$html$Html$p,
-				{ctor: '[]'},
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html$text('Copyright © 2018 Nasy'),
-					_1: {ctor: '[]'}
-				}),
-			_1: {ctor: '[]'}
-		}),
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			_user$project$Views$nav_view('footer'),
+			_user$project$Views$friend_links('footer'))),
 	_1: {
 		ctor: '::',
 		_0: A2(
 			_elm_lang$html$Html$section,
 			{
 				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class('footer-section'),
+				_0: _elm_lang$html$Html_Attributes$class('footer-section copyright'),
 				_1: {ctor: '[]'}
 			},
-			_user$project$Views$nav_view('footer')),
-		_1: {ctor: '[]'}
+			{
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$p,
+					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text('Copyright © 2018 Nasy'),
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			}),
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$div,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$style(
+						{
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'text-align', _1: 'right'},
+							_1: {ctor: '[]'}
+						}),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Events$onClick(_user$project$Msgs$Up2Top),
+						_1: {ctor: '[]'}
+					}
+				},
+				{
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$p,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$style(
+								{
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'position', _1: 'fixed'},
+									_1: {
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'bottom', _1: '0'},
+										_1: {
+											ctor: '::',
+											_0: {ctor: '_Tuple2', _0: 'right', _1: '10vw'},
+											_1: {ctor: '[]'}
+										}
+									}
+								}),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$i,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('fas fa-rocket fa-lg'),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$title('up to top'),
+										_1: {
+											ctor: '::',
+											_0: A2(_elm_lang$html$Html_Attributes$attribute, 'data-fa-transform', 'rotate--45'),
+											_1: {ctor: '[]'}
+										}
+									}
+								},
+								{ctor: '[]'}),
+							_1: {ctor: '[]'}
+						}),
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		}
 	}
 };
 var _user$project$Views$main_view = function (model) {
-	var _p2 = model.settings.route;
-	switch (_p2.ctor) {
+	var _p5 = model.settings.route;
+	switch (_p5.ctor) {
 		case 'Normal':
 			return {
 				ctor: '::',
@@ -12193,99 +12819,28 @@ var _user$project$Views$main_view = function (model) {
 					{
 						ctor: '::',
 						_0: _elm_lang$html$Html_Attributes$class('main-h2'),
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$id('writings'),
+							_1: {ctor: '[]'}
+						}
 					},
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html$text('Main H2 Text'),
+						_0: _elm_lang$html$Html$text('Writings'),
 						_1: {ctor: '[]'}
 					}),
 				_1: {
 					ctor: '::',
-					_0: A2(
-						_elm_lang$html$Html$p,
-						{
-							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$class('main-p'),
-							_1: {ctor: '[]'}
-						},
-						{
-							ctor: '::',
-							_0: _elm_lang$html$Html$text('Main P text'),
-							_1: {ctor: '[]'}
-						}),
-					_1: {
-						ctor: '::',
-						_0: A2(
-							_elm_lang$html$Html$a,
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$href('blogs123'),
-								_1: {ctor: '[]'}
-							},
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html$text('A clickable hyperlink'),
-								_1: {ctor: '[]'}
-							}),
-						_1: {
-							ctor: '::',
-							_0: _user$project$Views$blogs_view(model.blogs),
-							_1: {ctor: '[]'}
-						}
-					}
+					_0: _user$project$Views$blogs_view(model.blogs),
+					_1: {ctor: '[]'}
 				}
 			};
 		case 'BlogRoute':
 			return {
 				ctor: '::',
-				_0: A2(
-					_elm_lang$html$Html$h2,
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$class('main-h2'),
-						_1: {ctor: '[]'}
-					},
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html$text('Main H2 Text'),
-						_1: {ctor: '[]'}
-					}),
-				_1: {
-					ctor: '::',
-					_0: A2(
-						_elm_lang$html$Html$p,
-						{
-							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$class('main-p'),
-							_1: {ctor: '[]'}
-						},
-						{
-							ctor: '::',
-							_0: _elm_lang$html$Html$text('Main P text'),
-							_1: {ctor: '[]'}
-						}),
-					_1: {
-						ctor: '::',
-						_0: A2(
-							_elm_lang$html$Html$a,
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$href('blogs123'),
-								_1: {ctor: '[]'}
-							},
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html$text('A clickable hyperlink'),
-								_1: {ctor: '[]'}
-							}),
-						_1: {
-							ctor: '::',
-							_0: _user$project$Views$blog_view(model.blog),
-							_1: {ctor: '[]'}
-						}
-					}
-				}
+				_0: _user$project$Views$blog_view(model),
+				_1: {ctor: '[]'}
 			};
 		default:
 			return {
@@ -12311,6 +12866,14 @@ var _user$project$Views$main_view = function (model) {
 	}
 };
 var _user$project$Views$header_view = function (model) {
+	var hidden = function () {
+		var _p6 = model.settings.route;
+		if (_p6.ctor === 'BlogRoute') {
+			return true;
+		} else {
+			return false;
+		}
+	}();
 	return {
 		ctor: '::',
 		_0: A2(
@@ -12323,10 +12886,10 @@ var _user$project$Views$header_view = function (model) {
 			{
 				ctor: '::',
 				_0: A2(
-					_elm_lang$html$Html$h2,
+					_elm_lang$html$Html$h1,
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$class('header-section-title title'),
+						_0: _elm_lang$html$Html_Attributes$class('header-section-title main-title'),
 						_1: {ctor: '[]'}
 					},
 					{
@@ -12335,6 +12898,37 @@ var _user$project$Views$header_view = function (model) {
 						_1: {ctor: '[]'}
 					}),
 				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$section,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class('header-section-section'),
+							_1: {ctor: '[]'}
+						},
+						_user$project$Views$nav_view('header-section')),
+					_1: {ctor: '[]'}
+				}
+			}),
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$section,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$class('header-section'),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$classList(
+							{
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'hidden', _1: hidden},
+								_1: {ctor: '[]'}
+							}),
+						_1: {ctor: '[]'}
+					}
+				},
+				{
 					ctor: '::',
 					_0: A2(
 						_elm_lang$html$Html$p,
@@ -12349,30 +12943,35 @@ var _user$project$Views$header_view = function (model) {
 							_1: {ctor: '[]'}
 						}),
 					_1: {ctor: '[]'}
-				}
-			}),
-		_1: {
-			ctor: '::',
-			_0: A2(
-				_elm_lang$html$Html$section,
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$class('header-section'),
-					_1: {ctor: '[]'}
-				},
-				_user$project$Views$nav_view('header')),
-			_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$section,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$class('header-section'),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$classList(
+								{
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'hidden', _1: hidden},
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						}
+					},
+					_user$project$Views$find_me('header')),
+				_1: {ctor: '[]'}
+			}
 		}
 	};
 };
 var _user$project$Views$view = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
-		{
-			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$id('container'),
-			_1: {ctor: '[]'}
-		},
+		{ctor: '[]'},
 		{
 			ctor: '::',
 			_0: A2(
@@ -12407,11 +13006,7 @@ var _user$project$Views$view = function (model) {
 							_1: {
 								ctor: '::',
 								_0: _elm_lang$html$Html_Attributes$class('footer'),
-								_1: {
-									ctor: '::',
-									_0: _elm_lang$html$Html_Events$onClick(_user$project$Msgs$Up2Top),
-									_1: {ctor: '[]'}
-								}
+								_1: {ctor: '[]'}
 							}
 						},
 						_user$project$Views$footer_view),

@@ -47,10 +47,10 @@ from sanic.response import json, redirect
 from xxhash import xxh64
 
 from nasymoe.exceptions import BlogNotFound
-from nasymoe.render.org import emacs_daemon
-from nasymoe.render.render import render_blogs
-from nasymoe.stores.stores import (ldict2blog, load_store_blog, load_store_tag,
-                                   save_store_blog, save_store_tag)
+from nasymoe.render.render import add_last_next, render_blogs
+from nasymoe.stores.stores import (load_store_blog, load_store_blogs,
+                                   save_store_blog, save_store_blogs)
+from nasymoe.utils.dict_list import blog2ldict, ldict2blog
 
 app = Sanic("NasyLand")
 
@@ -58,9 +58,13 @@ app = Sanic("NasyLand")
 @app.listener("before_server_start")
 async def setup_db(app: Sanic, loop: Any) -> None:
     """Load blog infomations before server start."""
-    blogs, blog = render_blogs(2, "blog")
-    app.blog = ldict2blog(load_store_blog(blog))
-    app.blogs = load_store_tag(blogs)
+    rblogs, rblog = render_blogs(2, "blog")
+    blogs, blog = add_last_next((
+        ldict2blog(load_store_blogs(rblogs)),
+        ldict2blog(load_store_blog(rblog)),
+    ))
+    app.blogs = blog2ldict(blogs)
+    app.blog = blog.copy()
 
 
 @app.route("/blogs")
@@ -131,9 +135,8 @@ def not_found_404(request: Request, exception: NotFound) -> json:
 @app.listener("after_server_stop")
 async def close_db(app: Sanic, loop: Any) -> None:
     """Save blog infomations after server stop."""
-    save_store_blog(app.blog)
-    save_store_tag(app.blogs)
-    emacs_daemon("stop")
+    save_store_blog(blog2ldict(app.blog))
+    save_store_blogs(app.blogs)
 
 
 if __name__ == '__main__':

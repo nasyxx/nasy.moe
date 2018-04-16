@@ -72,6 +72,10 @@ class Tag(Model):
                     "day",
                     "hash",
                     "id",
+                    "last",
+                    "last_name",
+                    "next",
+                    "next_name",
                     "wordcount",
                     "blog_path",
                 }):
@@ -106,6 +110,10 @@ class Blog(Model):
                     "content_table",
                     "hash",
                     "id",
+                    "last",
+                    "last_name",
+                    "next",
+                    "next_name",
                     "wordcount",
                     "blog_path",
                 }):

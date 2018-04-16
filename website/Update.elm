@@ -158,5 +158,47 @@ update msg model =
                     other ->
                         ( model, Cmd.none )
 
+            Msgs.ChangeNavF ->
+                let
+                    old_settings =
+                        model.settings
+
+                    old_nav =
+                        old_settings.nav
+
+                    navf =
+                        case model.settings.nav.f of
+                            True ->
+                                False
+
+                            False ->
+                                True
+
+                    settings =
+                        { old_settings | nav = { old_nav | f = navf } }
+                in
+                    ( { model | settings = settings }, Cmd.none )
+
+            Msgs.ChangeNavN ->
+                let
+                    old_settings =
+                        model.settings
+
+                    old_nav =
+                        old_settings.nav
+
+                    navn =
+                        case model.settings.nav.n of
+                            True ->
+                                False
+
+                            False ->
+                                True
+
+                    settings =
+                        { old_settings | nav = { old_nav | n = navn } }
+                in
+                    ( { model | settings = settings }, Cmd.none )
+
             Msgs.Up2Top ->
                 ( model, up2top "" )

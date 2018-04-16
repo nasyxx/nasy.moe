@@ -44,6 +44,7 @@ from itertools import chain
 from nasymoe.render.org import emacs_daemon, org2blog
 from nasymoe.types import BLS, LP, P
 from nasymoe.utils.curring import curry
+from nasymoe.utils.dict_list import blog2ldict, ldict2blog
 from nasymoe.utils.str2path import s2p
 
 SUFFIX = {".org": org2blog}
@@ -65,6 +66,33 @@ def combine_blogs(olds: BLS, news: BLS) -> BLS:
     return olds
 
 
+def add_last_next(result: BLS) -> BLS:
+    """Add last and next to blogs."""
+    blogs, blog = result
+    lblogs = blog2ldict(blogs)
+
+    last = ""
+    last_name = ""
+    for i, (l, n) in enumerate(zip(lblogs, chain(lblogs[1:], ({"": ""},)))):
+        id_ = str(lblogs[i].get("id"))
+        blog[id_].update({
+            "last": last,
+            "next": n.get("blog_path", ""),
+            "last_name": last_name,
+            "next_name": n.get("title", "")
+        })
+        lblogs[i].update({
+            "last": last,
+            "next": n.get("blog_path", ""),
+            "last_name": last_name,
+            "next_name": n.get("title", "")
+        })
+        last = str(l.get("blog_path", ""))
+        last_name = str(l.get("title", ""))
+
+    return ldict2blog(lblogs), blog
+
+
 @curry
 def render_blogs(workers: int, basepath: P) -> BLS:
     """Render all blogs into two json like dict."""
@@ -81,4 +109,5 @@ def render_blogs(workers: int, basepath: P) -> BLS:
         ({}, {}))  # type: BLS
     pool.close()
     pool.join()
+
     return result

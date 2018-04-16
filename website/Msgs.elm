@@ -52,4 +52,6 @@ type Msg
     | OnFetchBlogs (WebData BlogsModel)
     | SetUrl String
     | OnLocationChange
+    | ChangeNavF
+    | ChangeNavN
     | Up2Top

@@ -187,6 +187,18 @@ def html_content_edit(raw_content: H_tag) -> Tuple[H_tag, H_tag, str]:
     wordcount = str(
         sum(ccount.values()) - sum([ccount[i] for i in ccount if i in NWORD]))
 
+    for pre in content_notb.select("pre"):
+        # Highlight.js needs the src in `pre code` Tag.
+        tag_code = bs4.BeautifulSoup("", "lxml").new_tag("code")
+        tag_code.string, pre.string = pre.text, tag_code.text
+        for c in pre["class"]:
+            tmp = re.findall(r"src-(\w+)", c)
+            for src in tmp:
+                if src:
+                    tag_code["class"] = src.lower()
+                    break
+        pre.append(tag_code)
+
     content = str(content_notb).replace(
         "<table", "<div class='table_container'><table").replace(
             "/table>", "/table></div>")

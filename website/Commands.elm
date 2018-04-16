@@ -76,6 +76,10 @@ main_decoder =
         |> required "wordcount" string
         |> required "blog_path" string
         |> required "id" string
+        |> optional "last" string ""
+        |> optional "last_name" string ""
+        |> optional "next" string ""
+        |> optional "next_name" string ""
         |> optional "content" string ""
         |> optional "content_table" string ""
 
@@ -96,12 +100,12 @@ blogs_decoder =
 
 blog_url : String
 blog_url =
-    "http://new.nasy.moe:1314/blog/"
+    "http://api.nasy.moe/blog/"
 
 
 blogs_url : String
 blogs_url =
-    "http://new.nasy.moe:1314/blogs"
+    "http://api.nasy.moe/blogs"
 
 
 fetch_blogs : Cmd Msg

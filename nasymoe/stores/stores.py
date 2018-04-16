@@ -37,11 +37,11 @@ Excited without bugs::
 There are more things in heaven and earth, Horatio, than are dreamt.
  --  From "Hamlet"
 """
-from operator import itemgetter
 from pathlib import Path
 
 from nasymoe.types import BL, BST, P
 from nasymoe.utils.curring import curry
+from nasymoe.utils.dict_list import blog2ldict
 
 try:
     json = __import__("ujson")
@@ -49,16 +49,6 @@ except ModuleNotFoundError:
     json = __import__("json")
 except ImportError:
     json = __import__("json")
-
-
-def blog2ldict(blog: BL) -> BST:
-    """Transform blog dict to list of dict."""
-    return sorted(blog.values(), key = itemgetter("blog_path"))
-
-
-def ldict2blog(lblog: BST) -> BL:
-    """Transform list of dict to blog dict."""
-    return {str(blog["id"]): blog for blog in lblog if blog}
 
 
 def update_store(stored: BST, blog: BL) -> BST:
@@ -89,6 +79,6 @@ def save_store_json(path: P, blog: BST) -> None:
 
 
 load_store_blog = load_store_json("./stores/blog.json")
-load_store_tag = load_store_json("./stores/tag.json")
+load_store_blogs = load_store_json("./stores/blogs.json")
 save_store_blog = save_store_json("./.stores/blog.json")
-save_store_tag = save_store_json("./.stores/tag.json")
+save_store_blogs = save_store_json("./.stores/blogs.json")
