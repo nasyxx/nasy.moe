@@ -100,12 +100,12 @@ blogs_decoder =
 
 blog_url : String
 blog_url =
-    "http://api.nasy.moe/blog/"
+    "https://api.nasy.moe/blog/"
 
 
 blogs_url : String
 blogs_url =
-    "http://api.nasy.moe/blogs"
+    "https://api.nasy.moe/blogs"
 
 
 fetch_blogs : Cmd Msg
