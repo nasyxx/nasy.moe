@@ -124,7 +124,7 @@ footer_view =
     [ section [ class "footer-section" ] <| nav_view "footer" ++ friend_links "footer"
     , section
         [ class "footer-section copyright" ]
-        [ p [] [ text "Copyright © 2018 Nasy" ] ]
+        [ p [ onClick Msgs.Up2Top ] [ text "Copyright © 2018 Nasy" ] ]
     , div [ style [ ( "text-align", "right" ) ], onClick Msgs.Up2Top ]
         [ p
             [ style
@@ -171,6 +171,8 @@ nav_view base =
             , li
                 [ class <| base ++ "-section-nav-list nav-list" ]
                 [ a [ href "https://pools.nasy.moe", title "Pools" ] [ text "Pools" ] ]
+            , li [ class <| base ++ "-section-nav-list nav-list" ]
+                [ a [ href "/blog/2018/05/03/About#About", title "About" ] [ text "About" ] ]
             ]
                 ++ [ li
                         [ class <| base ++ "-section-nav-list nav-list" ]

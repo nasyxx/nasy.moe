@@ -4,7 +4,7 @@ body
     -webkit-font-smoothing: antialiased
 
 
-h1,h2,h3,h4,h5,h6,p,a,footer,tr
+h1,h2,h3,h4,h5,h6,p,a,footer,tr,ul.org-ul li
     font-family: $FONT_FAMILY_NORMAL
     trans(0.3s)
     hover_box_shadow(2px)
@@ -110,7 +110,7 @@ a, svg
     &:hover
         color: $COLOR_LINK_LIGHT
 
-p
+p, ul.org-ul li
     font-size: $FONT_SIZE_P
     color: $COLOR_TEXT
     padding: 5px
@@ -154,6 +154,9 @@ ul
         p,
         a
             margin: 0
+    &.org-ul
+        li
+            list-style: inside
 
 hr
     border: 2px dashed $COLOR_H2

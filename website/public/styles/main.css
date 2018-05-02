@@ -10,7 +10,8 @@ h6,
 p,
 a,
 footer,
-tr {
+tr,
+ul.org-ul li {
   font-family: "Chalkboard", "comic sans", "PingFang SC", "Meslo LG", "sans-serif";
   transition: all 0.3s cubic-bezier(0.47, 0, 0.745, 0.715);
   border-radius: 5px;
@@ -25,6 +26,7 @@ p:before,
 a:before,
 footer:before,
 tr:before,
+ul.org-ul li:before,
 h1:after,
 h2:after,
 h3:after,
@@ -34,7 +36,8 @@ h6:after,
 p:after,
 a:after,
 footer:after,
-tr:after {
+tr:after,
+ul.org-ul li:after {
   box-sizing: border-box;
 }
 h1:hover,
@@ -46,7 +49,8 @@ h6:hover,
 p:hover,
 a:hover,
 footer:hover,
-tr:hover {
+tr:hover,
+ul.org-ul li:hover {
   box-shadow: 0 2px 5px #0f0c29;
 }
 h1:hover,
@@ -58,7 +62,8 @@ h6:hover,
 p:hover,
 a:hover,
 footer:hover,
-tr:hover {
+tr:hover,
+ul.org-ul li:hover {
   background-color: rgba(15,12,41,0.7);
 }
 h1,
@@ -190,22 +195,27 @@ a:hover,
 svg:hover {
   color: #b2e672;
 }
-p {
+p,
+ul.org-ul li {
   font-size: 1rem;
   color: #e1ffcf;
   padding: 5px;
   border-radius: 5px;
   text-shadow: 0 0 1px #0f0c29, 0 0 2px #0f0c29;
 }
-p:hover {
+p:hover,
+ul.org-ul li:hover {
   box-shadow: 0 2px 5px #0f0c29;
 }
-p:hover {
+p:hover,
+ul.org-ul li:hover {
   background-color: rgba(15,12,41,0.7);
   color: #d1ffb6;
 }
 p::selection,
-p b::selection {
+ul.org-ul li::selection,
+p b::selection,
+ul.org-ul li b::selection {
   color: #9efcb4;
 }
 footer {
@@ -234,6 +244,9 @@ ul li {
 ul li p,
 ul li a {
   margin: 0;
+}
+ul.org-ul li {
+  list-style: inside;
 }
 hr {
   border: 2px dashed #9efcb4;
@@ -274,7 +287,7 @@ body {
 code {
   text-rendering: optimizeLegibility;
   font-family: "FiraCode-retina", "Fira Code", "hermit", "operator mono book", "Menlo", "Meslo LG", monospace;
-  font-size: 0.7rem;
+  font-size: 0.9em;
 }
 code pre {
   text-rendering: optimizeLegibility;
@@ -720,4 +733,22 @@ td:hover {
 #footer svg:hover * {
   color: #e0f9b5;
   font-size: larger;
+}
+.footdef {
+  display: flex;
+  flex-flow: row nowrap;
+}
+.footdef a {
+  color: #b2e672;
+}
+.footdef a:hover {
+  color: #302b63;
+  background-color: #a8d8ea;
+}
+.footdef sup a {
+  text-decoration: none;
+}
+p.footpara {
+  margin: 0;
+  padding: 0 5px;
 }

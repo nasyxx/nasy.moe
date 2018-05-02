@@ -56,7 +56,8 @@ app.ports.set_title.subscribe(function (title) {
                 add_icon(),
                 // formattime(),
                 hljs.initHighlighting(),
-                remove_last_tag_c()
+                remove_last_tag_c(),
+                remove_duplicate_h1()
             )
         }, 1000);
     }
@@ -167,6 +168,9 @@ function remove_last_tag_c() {
     })
 }
 
+function remove_duplicate_h1() {
+    document.querySelector("#content").removeChild(document.querySelector("#content > h1"))
+}
 
 // function formattime() {
 //     document.querySelectorAll("time[datetime]").forEach(function (e) {

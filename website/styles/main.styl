@@ -270,3 +270,18 @@ td
             *
                 color: $COLOR_H3
                 font-size: larger
+
+.footdef
+    display: flex
+    flex-flow: row nowrap
+    & a
+        color: $COLOR_LINK_LIGHT
+        &:hover
+            color: $COLOR_BG1
+            background-color: $COLOR_LINK
+    & sup a
+        text-decoration: none
+
+p.footpara
+    margin: 0
+    padding: 0 5px
