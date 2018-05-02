@@ -50,6 +50,8 @@ import Json.Encode exposing (string)
 import Msgs exposing (Msg)
 import Models exposing (BlogModel, BlogsModel, Model, Route(..))
 import RemoteData exposing (WebData)
+import Date
+import Moment
 
 
 view : Model -> Html Msg
@@ -371,7 +373,10 @@ tag_view blog =
             [ icon "fas fa-pencil-alt" "author", span [] [ text blog.author ] ]
         , section
             [ class "tags-time" ]
-            [ icon "far fa-calendar-alt" "time", time [ datetime <| blog.datetime ] [] ]
+            [ icon "far fa-calendar-alt" "time"
+            , time [ datetime <| blog.datetime ]
+                [ text <| date_formatter blog.datetime ]
+            ]
         , section
             [ class "tags-summary"
             , class <|
@@ -427,3 +432,20 @@ bhref url title =
 icon : String -> String -> Html msg
 icon ss tt =
     i [ class <| "icon " ++ ss, title tt ] []
+
+
+date_formatter : String -> String
+date_formatter datestr =
+    case Date.fromString datestr of
+        Ok date ->
+            Moment.format
+                [ Moment.MonthNameFirstThree
+                , Moment.Text " "
+                , Moment.DayOfMonthSuffix
+                , Moment.Text ", "
+                , Moment.YearNumber
+                ]
+                date
+
+        _ ->
+            ""

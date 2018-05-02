@@ -482,6 +482,9 @@ body {
 .tags ul li {
   list-style: none;
 }
+.tags-list-li {
+  padding-left: 0;
+}
 .tags-list-li-a {
   border-radius: 0;
   border-bottom: 1px solid;

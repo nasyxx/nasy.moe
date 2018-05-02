@@ -35,6 +35,8 @@
  */
 var normal_title = document.title
 
+var _done = "N"
+
 const app = Elm.Main.embed(
     document.getElementById("container"),
     Object.assign({
@@ -47,6 +49,17 @@ const app = Elm.Main.embed(
 app.ports.set_title.subscribe(function (title) {
     document.title = title
     normal_title = document.title
+    if (_done == "N") {
+        _done = "Y"
+        setTimeout(function () {
+            domready(
+                add_icon(),
+                // formattime(),
+                hljs.initHighlighting(),
+                remove_last_tag_c()
+            )
+        }, 1000);
+    }
 })
 
 
@@ -155,12 +168,12 @@ function remove_last_tag_c() {
 }
 
 
-function formattime() {
-    document.querySelectorAll("time[datetime]").forEach(function (e) {
-        e.textContent = moment(e.attributes.datetime.textContent).format("ll")
-        console.log(moment(e.attributes.datetime.textContent).format("ll"))
-    })
-}
+// function formattime() {
+//     document.querySelectorAll("time[datetime]").forEach(function (e) {
+//         e.textContent = moment(e.attributes.datetime.textContent).format("ll")
+//         console.log(moment(e.attributes.datetime.textContent).format("ll"))
+//     })
+// }
 
 function domready() {
     // Edited from https://github.com/ded/domready v1.0.8
@@ -179,15 +192,6 @@ function domready() {
         loaded ? setTimeout(fn, 0) : fns.push(fn)
     }
 }
-
-setTimeout(function () {
-    domready(
-        add_icon(),
-        formattime(),
-        hljs.initHighlighting(),
-        remove_last_tag_c()
-    )
-}, 1000);
 
 
 window.addEventListener('scroll', function () {

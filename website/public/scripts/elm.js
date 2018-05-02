@@ -5910,6 +5910,39 @@ var _ccapndave$elm_update_extra$Update_Extra$sequence = F3(
 		return A3(_elm_lang$core$List$foldl, foldUpdate, init, msgs);
 	});
 
+//import Result //
+
+var _elm_lang$core$Native_Date = function() {
+
+function fromString(str)
+{
+	var date = new Date(str);
+	return isNaN(date.getTime())
+		? _elm_lang$core$Result$Err('Unable to parse \'' + str + '\' as a date. Dates must be in the ISO 8601 format.')
+		: _elm_lang$core$Result$Ok(date);
+}
+
+var dayTable = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+var monthTable =
+	['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+	 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+
+return {
+	fromString: fromString,
+	year: function(d) { return d.getFullYear(); },
+	month: function(d) { return { ctor: monthTable[d.getMonth()] }; },
+	day: function(d) { return d.getDate(); },
+	hour: function(d) { return d.getHours(); },
+	minute: function(d) { return d.getMinutes(); },
+	second: function(d) { return d.getSeconds(); },
+	millisecond: function(d) { return d.getMilliseconds(); },
+	toTime: function(d) { return d.getTime(); },
+	fromTime: function(t) { return new Date(t); },
+	dayOfWeek: function(d) { return { ctor: dayTable[d.getDay()] }; }
+};
+
+}();
 var _elm_lang$core$Task$onError = _elm_lang$core$Native_Scheduler.onError;
 var _elm_lang$core$Task$andThen = _elm_lang$core$Native_Scheduler.andThen;
 var _elm_lang$core$Task$spawnCmd = F2(
@@ -6321,6 +6354,39 @@ var _elm_lang$core$Time$subMap = F2(
 			});
 	});
 _elm_lang$core$Native_Platform.effectManagers['Time'] = {pkg: 'elm-lang/core', init: _elm_lang$core$Time$init, onEffects: _elm_lang$core$Time$onEffects, onSelfMsg: _elm_lang$core$Time$onSelfMsg, tag: 'sub', subMap: _elm_lang$core$Time$subMap};
+
+var _elm_lang$core$Date$millisecond = _elm_lang$core$Native_Date.millisecond;
+var _elm_lang$core$Date$second = _elm_lang$core$Native_Date.second;
+var _elm_lang$core$Date$minute = _elm_lang$core$Native_Date.minute;
+var _elm_lang$core$Date$hour = _elm_lang$core$Native_Date.hour;
+var _elm_lang$core$Date$dayOfWeek = _elm_lang$core$Native_Date.dayOfWeek;
+var _elm_lang$core$Date$day = _elm_lang$core$Native_Date.day;
+var _elm_lang$core$Date$month = _elm_lang$core$Native_Date.month;
+var _elm_lang$core$Date$year = _elm_lang$core$Native_Date.year;
+var _elm_lang$core$Date$fromTime = _elm_lang$core$Native_Date.fromTime;
+var _elm_lang$core$Date$toTime = _elm_lang$core$Native_Date.toTime;
+var _elm_lang$core$Date$fromString = _elm_lang$core$Native_Date.fromString;
+var _elm_lang$core$Date$now = A2(_elm_lang$core$Task$map, _elm_lang$core$Date$fromTime, _elm_lang$core$Time$now);
+var _elm_lang$core$Date$Date = {ctor: 'Date'};
+var _elm_lang$core$Date$Sun = {ctor: 'Sun'};
+var _elm_lang$core$Date$Sat = {ctor: 'Sat'};
+var _elm_lang$core$Date$Fri = {ctor: 'Fri'};
+var _elm_lang$core$Date$Thu = {ctor: 'Thu'};
+var _elm_lang$core$Date$Wed = {ctor: 'Wed'};
+var _elm_lang$core$Date$Tue = {ctor: 'Tue'};
+var _elm_lang$core$Date$Mon = {ctor: 'Mon'};
+var _elm_lang$core$Date$Dec = {ctor: 'Dec'};
+var _elm_lang$core$Date$Nov = {ctor: 'Nov'};
+var _elm_lang$core$Date$Oct = {ctor: 'Oct'};
+var _elm_lang$core$Date$Sep = {ctor: 'Sep'};
+var _elm_lang$core$Date$Aug = {ctor: 'Aug'};
+var _elm_lang$core$Date$Jul = {ctor: 'Jul'};
+var _elm_lang$core$Date$Jun = {ctor: 'Jun'};
+var _elm_lang$core$Date$May = {ctor: 'May'};
+var _elm_lang$core$Date$Apr = {ctor: 'Apr'};
+var _elm_lang$core$Date$Mar = {ctor: 'Mar'};
+var _elm_lang$core$Date$Feb = {ctor: 'Feb'};
+var _elm_lang$core$Date$Jan = {ctor: 'Jan'};
 
 //import Maybe, Native.List //
 
@@ -9974,57 +10040,66 @@ var _krisajenkins$remotedata$RemoteData$prism = {
 var _krisajenkins$remotedata$RemoteData$Failure = function (a) {
 	return {ctor: 'Failure', _0: a};
 };
+var _krisajenkins$remotedata$RemoteData$fromMaybe = F2(
+	function (error, maybe) {
+		var _p6 = maybe;
+		if (_p6.ctor === 'Nothing') {
+			return _krisajenkins$remotedata$RemoteData$Failure(error);
+		} else {
+			return _krisajenkins$remotedata$RemoteData$Success(_p6._0);
+		}
+	});
 var _krisajenkins$remotedata$RemoteData$fromResult = function (result) {
-	var _p6 = result;
-	if (_p6.ctor === 'Err') {
-		return _krisajenkins$remotedata$RemoteData$Failure(_p6._0);
+	var _p7 = result;
+	if (_p7.ctor === 'Err') {
+		return _krisajenkins$remotedata$RemoteData$Failure(_p7._0);
 	} else {
-		return _krisajenkins$remotedata$RemoteData$Success(_p6._0);
+		return _krisajenkins$remotedata$RemoteData$Success(_p7._0);
 	}
 };
 var _krisajenkins$remotedata$RemoteData$asCmd = _elm_lang$core$Task$attempt(_krisajenkins$remotedata$RemoteData$fromResult);
 var _krisajenkins$remotedata$RemoteData$sendRequest = _elm_lang$http$Http$send(_krisajenkins$remotedata$RemoteData$fromResult);
-var _krisajenkins$remotedata$RemoteData$fromTask = function (_p7) {
+var _krisajenkins$remotedata$RemoteData$fromTask = function (_p8) {
 	return A2(
 		_elm_lang$core$Task$onError,
-		function (_p8) {
+		function (_p9) {
 			return _elm_lang$core$Task$succeed(
-				_krisajenkins$remotedata$RemoteData$Failure(_p8));
+				_krisajenkins$remotedata$RemoteData$Failure(_p9));
 		},
-		A2(_elm_lang$core$Task$map, _krisajenkins$remotedata$RemoteData$Success, _p7));
+		A2(_elm_lang$core$Task$map, _krisajenkins$remotedata$RemoteData$Success, _p8));
 };
 var _krisajenkins$remotedata$RemoteData$Loading = {ctor: 'Loading'};
 var _krisajenkins$remotedata$RemoteData$NotAsked = {ctor: 'NotAsked'};
 var _krisajenkins$remotedata$RemoteData$map = F2(
 	function (f, data) {
-		var _p9 = data;
-		switch (_p9.ctor) {
+		var _p10 = data;
+		switch (_p10.ctor) {
 			case 'Success':
 				return _krisajenkins$remotedata$RemoteData$Success(
-					f(_p9._0));
+					f(_p10._0));
 			case 'Loading':
 				return _krisajenkins$remotedata$RemoteData$Loading;
 			case 'NotAsked':
 				return _krisajenkins$remotedata$RemoteData$NotAsked;
 			default:
-				return _krisajenkins$remotedata$RemoteData$Failure(_p9._0);
+				return _krisajenkins$remotedata$RemoteData$Failure(_p10._0);
 		}
 	});
-var _krisajenkins$remotedata$RemoteData$toMaybe = function (_p10) {
+var _krisajenkins$remotedata$RemoteData$toMaybe = function (_p11) {
 	return A2(
 		_krisajenkins$remotedata$RemoteData$withDefault,
 		_elm_lang$core$Maybe$Nothing,
-		A2(_krisajenkins$remotedata$RemoteData$map, _elm_lang$core$Maybe$Just, _p10));
+		A2(_krisajenkins$remotedata$RemoteData$map, _elm_lang$core$Maybe$Just, _p11));
 };
 var _krisajenkins$remotedata$RemoteData$mapError = F2(
 	function (f, data) {
-		var _p11 = data;
-		switch (_p11.ctor) {
+		var _p12 = data;
+		switch (_p12.ctor) {
 			case 'Success':
-				return _krisajenkins$remotedata$RemoteData$Success(_p11._0);
+				return _krisajenkins$remotedata$RemoteData$Success(_p12._0);
 			case 'Failure':
 				return _krisajenkins$remotedata$RemoteData$Failure(
-					f(_p11._0));
+					f(_p12._0));
 			case 'Loading':
 				return _krisajenkins$remotedata$RemoteData$Loading;
 			default:
@@ -10033,21 +10108,21 @@ var _krisajenkins$remotedata$RemoteData$mapError = F2(
 	});
 var _krisajenkins$remotedata$RemoteData$mapBoth = F2(
 	function (successFn, errorFn) {
-		return function (_p12) {
+		return function (_p13) {
 			return A2(
 				_krisajenkins$remotedata$RemoteData$mapError,
 				errorFn,
-				A2(_krisajenkins$remotedata$RemoteData$map, successFn, _p12));
+				A2(_krisajenkins$remotedata$RemoteData$map, successFn, _p13));
 		};
 	});
 var _krisajenkins$remotedata$RemoteData$andThen = F2(
 	function (f, data) {
-		var _p13 = data;
-		switch (_p13.ctor) {
+		var _p14 = data;
+		switch (_p14.ctor) {
 			case 'Success':
-				return f(_p13._0);
+				return f(_p14._0);
 			case 'Failure':
-				return _krisajenkins$remotedata$RemoteData$Failure(_p13._0);
+				return _krisajenkins$remotedata$RemoteData$Failure(_p14._0);
 			case 'NotAsked':
 				return _krisajenkins$remotedata$RemoteData$NotAsked;
 			default:
@@ -10056,55 +10131,55 @@ var _krisajenkins$remotedata$RemoteData$andThen = F2(
 	});
 var _krisajenkins$remotedata$RemoteData$andMap = F2(
 	function (wrappedValue, wrappedFunction) {
-		var _p14 = {ctor: '_Tuple2', _0: wrappedFunction, _1: wrappedValue};
-		_v10_5:
+		var _p15 = {ctor: '_Tuple2', _0: wrappedFunction, _1: wrappedValue};
+		_v11_5:
 		do {
-			_v10_4:
+			_v11_4:
 			do {
-				_v10_3:
+				_v11_3:
 				do {
-					_v10_2:
+					_v11_2:
 					do {
-						switch (_p14._0.ctor) {
+						switch (_p15._0.ctor) {
 							case 'Success':
-								switch (_p14._1.ctor) {
+								switch (_p15._1.ctor) {
 									case 'Success':
 										return _krisajenkins$remotedata$RemoteData$Success(
-											_p14._0._0(_p14._1._0));
+											_p15._0._0(_p15._1._0));
 									case 'Failure':
-										break _v10_2;
+										break _v11_2;
 									case 'Loading':
-										break _v10_4;
+										break _v11_4;
 									default:
 										return _krisajenkins$remotedata$RemoteData$NotAsked;
 								}
 							case 'Failure':
-								return _krisajenkins$remotedata$RemoteData$Failure(_p14._0._0);
+								return _krisajenkins$remotedata$RemoteData$Failure(_p15._0._0);
 							case 'Loading':
-								switch (_p14._1.ctor) {
+								switch (_p15._1.ctor) {
 									case 'Failure':
-										break _v10_2;
+										break _v11_2;
 									case 'Loading':
-										break _v10_3;
+										break _v11_3;
 									case 'NotAsked':
-										break _v10_3;
+										break _v11_3;
 									default:
-										break _v10_3;
+										break _v11_3;
 								}
 							default:
-								switch (_p14._1.ctor) {
+								switch (_p15._1.ctor) {
 									case 'Failure':
-										break _v10_2;
+										break _v11_2;
 									case 'Loading':
-										break _v10_4;
+										break _v11_4;
 									case 'NotAsked':
-										break _v10_5;
+										break _v11_5;
 									default:
-										break _v10_5;
+										break _v11_5;
 								}
 						}
 					} while(false);
-					return _krisajenkins$remotedata$RemoteData$Failure(_p14._1._0);
+					return _krisajenkins$remotedata$RemoteData$Failure(_p15._1._0);
 				} while(false);
 				return _krisajenkins$remotedata$RemoteData$Loading;
 			} while(false);
@@ -10119,6 +10194,15 @@ var _krisajenkins$remotedata$RemoteData$map2 = F3(
 			b,
 			A2(_krisajenkins$remotedata$RemoteData$map, f, a));
 	});
+var _krisajenkins$remotedata$RemoteData$fromList = A2(
+	_elm_lang$core$List$foldr,
+	_krisajenkins$remotedata$RemoteData$map2(
+		F2(
+			function (x, y) {
+				return {ctor: '::', _0: x, _1: y};
+			})),
+	_krisajenkins$remotedata$RemoteData$Success(
+		{ctor: '[]'}));
 var _krisajenkins$remotedata$RemoteData$map3 = F4(
 	function (f, a, b, c) {
 		return A2(
@@ -10144,12 +10228,12 @@ var _krisajenkins$remotedata$RemoteData$append = F2(
 	});
 var _krisajenkins$remotedata$RemoteData$update = F2(
 	function (f, remoteData) {
-		var _p15 = remoteData;
-		switch (_p15.ctor) {
+		var _p16 = remoteData;
+		switch (_p16.ctor) {
 			case 'Success':
-				var _p16 = f(_p15._0);
-				var first = _p16._0;
-				var second = _p16._1;
+				var _p17 = f(_p16._0);
+				var first = _p17._0;
+				var second = _p17._1;
 				return {
 					ctor: '_Tuple2',
 					_0: _krisajenkins$remotedata$RemoteData$Success(first),
@@ -10162,7 +10246,7 @@ var _krisajenkins$remotedata$RemoteData$update = F2(
 			default:
 				return {
 					ctor: '_Tuple2',
-					_0: _krisajenkins$remotedata$RemoteData$Failure(_p15._0),
+					_0: _krisajenkins$remotedata$RemoteData$Failure(_p16._0),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 		}
@@ -11265,6 +11349,488 @@ var _rgrempel$elm_route_url$RouteUrl_Builder$fromHash = function (url) {
 		{entry: _rgrempel$elm_route_url$RouteUrl$NewEntry, path: unwrapped.path, query: unwrapped.query, hash: unwrapped.hash});
 };
 
+var _ryannhg$elm_moment$Moment$toSuffix = function (num) {
+	var suffix = function () {
+		var _p0 = num;
+		switch (_p0) {
+			case 11:
+				return 'th';
+			case 12:
+				return 'th';
+			case 13:
+				return 'th';
+			default:
+				var _p1 = A2(_elm_lang$core$Basics_ops['%'], num, 10);
+				switch (_p1) {
+					case 1:
+						return 'st';
+					case 2:
+						return 'nd';
+					case 3:
+						return 'rd';
+					default:
+						return 'th';
+				}
+		}
+	}();
+	return A2(
+		_elm_lang$core$Basics_ops['++'],
+		_elm_lang$core$Basics$toString(num),
+		suffix);
+};
+var _ryannhg$elm_moment$Moment$toFixedLength = function (num) {
+	return (_elm_lang$core$Native_Utils.cmp(num, 10) < 0) ? A2(
+		_elm_lang$core$Basics_ops['++'],
+		'0',
+		_elm_lang$core$Basics$toString(num)) : _elm_lang$core$Basics$toString(num);
+};
+var _ryannhg$elm_moment$Moment$toNonMilitary = function (num) {
+	return _elm_lang$core$Native_Utils.eq(num, 0) ? 12 : ((_elm_lang$core$Native_Utils.cmp(num, 12) < 0) ? num : (num - 12));
+};
+var _ryannhg$elm_moment$Moment$amPm = function (date) {
+	return (_elm_lang$core$Native_Utils.cmp(
+		_elm_lang$core$Date$hour(date),
+		11) > 0) ? 'pm' : 'am';
+};
+var _ryannhg$elm_moment$Moment$year = function (date) {
+	return _elm_lang$core$Basics$toString(
+		_elm_lang$core$Date$year(date));
+};
+var _ryannhg$elm_moment$Moment$firstDayOfYear = function (date) {
+	var _p2 = _elm_lang$core$Date$fromString(
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			_elm_lang$core$Basics$toString(
+				_elm_lang$core$Date$year(date)),
+			'-01-01T00:00:00.000Z'));
+	if (_p2.ctor === 'Ok') {
+		return _p2._0;
+	} else {
+		return date;
+	}
+};
+var _ryannhg$elm_moment$Moment$dayOfWeekName = function (date) {
+	var _p3 = _elm_lang$core$Date$dayOfWeek(date);
+	switch (_p3.ctor) {
+		case 'Mon':
+			return 'Monday';
+		case 'Tue':
+			return 'Tuesday';
+		case 'Wed':
+			return 'Wednesday';
+		case 'Thu':
+			return 'Thursday';
+		case 'Fri':
+			return 'Friday';
+		case 'Sat':
+			return 'Saturday';
+		default:
+			return 'Sunday';
+	}
+};
+var _ryannhg$elm_moment$Moment$dayOfMonth = _elm_lang$core$Date$day;
+var _ryannhg$elm_moment$Moment$daysInMonth = F2(
+	function (year, month) {
+		var _p4 = month;
+		switch (_p4.ctor) {
+			case 'Jan':
+				return 31;
+			case 'Feb':
+				return _elm_lang$core$Native_Utils.eq(
+					A2(_elm_lang$core$Basics_ops['%'], year, 4),
+					0) ? 29 : 28;
+			case 'Mar':
+				return 31;
+			case 'Apr':
+				return 30;
+			case 'May':
+				return 31;
+			case 'Jun':
+				return 30;
+			case 'Jul':
+				return 31;
+			case 'Aug':
+				return 31;
+			case 'Sep':
+				return 30;
+			case 'Oct':
+				return 31;
+			case 'Nov':
+				return 30;
+			default:
+				return 31;
+		}
+	});
+var _ryannhg$elm_moment$Moment$fullMonthName = function (date) {
+	var _p5 = _elm_lang$core$Date$month(date);
+	switch (_p5.ctor) {
+		case 'Jan':
+			return 'January';
+		case 'Feb':
+			return 'February';
+		case 'Mar':
+			return 'March';
+		case 'Apr':
+			return 'April';
+		case 'May':
+			return 'May';
+		case 'Jun':
+			return 'June';
+		case 'Jul':
+			return 'July';
+		case 'Aug':
+			return 'August';
+		case 'Sep':
+			return 'September';
+		case 'Oct':
+			return 'October';
+		case 'Nov':
+			return 'November';
+		default:
+			return 'December';
+	}
+};
+var _ryannhg$elm_moment$Moment$days = {
+	ctor: '::',
+	_0: _elm_lang$core$Date$Sun,
+	_1: {
+		ctor: '::',
+		_0: _elm_lang$core$Date$Mon,
+		_1: {
+			ctor: '::',
+			_0: _elm_lang$core$Date$Tue,
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$core$Date$Wed,
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$core$Date$Thu,
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$core$Date$Fri,
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$core$Date$Sat,
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			}
+		}
+	}
+};
+var _ryannhg$elm_moment$Moment$dayOfWeek = function (date) {
+	return function (_p6) {
+		var _p7 = _p6;
+		return _p7._0;
+	}(
+		A2(
+			_elm_lang$core$Maybe$withDefault,
+			{ctor: '_Tuple2', _0: 0, _1: _elm_lang$core$Date$Sun},
+			_elm_lang$core$List$head(
+				A2(
+					_elm_lang$core$List$filter,
+					function (_p8) {
+						var _p9 = _p8;
+						return _elm_lang$core$Native_Utils.eq(
+							_p9._1,
+							_elm_lang$core$Date$dayOfWeek(date));
+					},
+					A2(
+						_elm_lang$core$List$indexedMap,
+						F2(
+							function (v0, v1) {
+								return {ctor: '_Tuple2', _0: v0, _1: v1};
+							}),
+						_ryannhg$elm_moment$Moment$days)))));
+};
+var _ryannhg$elm_moment$Moment$months = {
+	ctor: '::',
+	_0: _elm_lang$core$Date$Jan,
+	_1: {
+		ctor: '::',
+		_0: _elm_lang$core$Date$Feb,
+		_1: {
+			ctor: '::',
+			_0: _elm_lang$core$Date$Mar,
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$core$Date$Apr,
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$core$Date$May,
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$core$Date$Jun,
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$core$Date$Jul,
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$core$Date$Aug,
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$core$Date$Sep,
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$core$Date$Nov,
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$core$Date$Dec,
+											_1: {ctor: '[]'}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+};
+var _ryannhg$elm_moment$Moment$monthPair = function (date) {
+	return A2(
+		_elm_lang$core$Maybe$withDefault,
+		{ctor: '_Tuple2', _0: 0, _1: _elm_lang$core$Date$Jan},
+		_elm_lang$core$List$head(
+			A2(
+				_elm_lang$core$List$filter,
+				function (_p10) {
+					var _p11 = _p10;
+					return _elm_lang$core$Native_Utils.eq(
+						_p11._1,
+						_elm_lang$core$Date$month(date));
+				},
+				A2(
+					_elm_lang$core$List$indexedMap,
+					F2(
+						function (v0, v1) {
+							return {ctor: '_Tuple2', _0: v0, _1: v1};
+						}),
+					_ryannhg$elm_moment$Moment$months))));
+};
+var _ryannhg$elm_moment$Moment$monthNumber = function (date) {
+	return A2(
+		F2(
+			function (x, y) {
+				return x + y;
+			}),
+		1,
+		function (_p12) {
+			var _p13 = _p12;
+			return _p13._0;
+		}(
+			_ryannhg$elm_moment$Moment$monthPair(date)));
+};
+var _ryannhg$elm_moment$Moment$quarter = function (date) {
+	return (_ryannhg$elm_moment$Moment$monthNumber(date) / 4) | 0;
+};
+var _ryannhg$elm_moment$Moment$dayOfYear = function (date) {
+	var monthsBeforeThisOne = A2(
+		_elm_lang$core$List$take,
+		_ryannhg$elm_moment$Moment$monthNumber(date),
+		_ryannhg$elm_moment$Moment$months);
+	var daysBeforeThisMonth = _elm_lang$core$List$sum(
+		A2(
+			_elm_lang$core$List$map,
+			_ryannhg$elm_moment$Moment$daysInMonth(
+				_elm_lang$core$Date$year(date)),
+			monthsBeforeThisOne));
+	return daysBeforeThisMonth + _ryannhg$elm_moment$Moment$dayOfMonth(date);
+};
+var _ryannhg$elm_moment$Moment$weekOfYear = function (date) {
+	var firstDay = _ryannhg$elm_moment$Moment$firstDayOfYear(date);
+	var firstDayOffset = _ryannhg$elm_moment$Moment$dayOfWeek(firstDay);
+	var daysSoFar = _ryannhg$elm_moment$Moment$dayOfYear(date);
+	return (((daysSoFar + firstDayOffset) / 7) | 0) + 1;
+};
+var _ryannhg$elm_moment$Moment$piece = F2(
+	function (date, token) {
+		var _p14 = token;
+		switch (_p14.ctor) {
+			case 'MonthNumber':
+				return _elm_lang$core$Basics$toString(
+					_ryannhg$elm_moment$Moment$monthNumber(date));
+			case 'MonthSuffix':
+				return _ryannhg$elm_moment$Moment$toSuffix(
+					_ryannhg$elm_moment$Moment$monthNumber(date));
+			case 'MonthFixed':
+				return _ryannhg$elm_moment$Moment$toFixedLength(
+					_ryannhg$elm_moment$Moment$monthNumber(date));
+			case 'MonthNameFirstThree':
+				return _elm_lang$core$Basics$toString(
+					_elm_lang$core$Date$month(date));
+			case 'MonthNameFull':
+				return _ryannhg$elm_moment$Moment$fullMonthName(date);
+			case 'QuarterNumber':
+				return _elm_lang$core$Basics$toString(
+					_ryannhg$elm_moment$Moment$quarter(date));
+			case 'QuarterSuffix':
+				return _ryannhg$elm_moment$Moment$toSuffix(
+					_ryannhg$elm_moment$Moment$quarter(date));
+			case 'DayOfMonthNumber':
+				return _elm_lang$core$Basics$toString(
+					_ryannhg$elm_moment$Moment$dayOfMonth(date));
+			case 'DayOfMonthSuffix':
+				return _ryannhg$elm_moment$Moment$toSuffix(
+					_ryannhg$elm_moment$Moment$dayOfMonth(date));
+			case 'DayOfMonthFixed':
+				return _ryannhg$elm_moment$Moment$toFixedLength(
+					_ryannhg$elm_moment$Moment$dayOfMonth(date));
+			case 'DayOfYearNumber':
+				return _elm_lang$core$Basics$toString(
+					_ryannhg$elm_moment$Moment$dayOfYear(date));
+			case 'DayOfYearSuffix':
+				return _ryannhg$elm_moment$Moment$toSuffix(
+					_ryannhg$elm_moment$Moment$dayOfYear(date));
+			case 'DayOfYearFixed':
+				return _ryannhg$elm_moment$Moment$toFixedLength(
+					_ryannhg$elm_moment$Moment$dayOfYear(date));
+			case 'DayOfWeekNumber':
+				return _elm_lang$core$Basics$toString(
+					_ryannhg$elm_moment$Moment$dayOfWeek(date));
+			case 'DayOfWeekSuffix':
+				return _ryannhg$elm_moment$Moment$toSuffix(
+					_ryannhg$elm_moment$Moment$dayOfWeek(date));
+			case 'DayOfWeekNameFirstTwo':
+				return A2(
+					_elm_lang$core$String$left,
+					2,
+					_ryannhg$elm_moment$Moment$dayOfWeekName(date));
+			case 'DayOfWeekNameFirstThree':
+				return A2(
+					_elm_lang$core$String$left,
+					3,
+					_ryannhg$elm_moment$Moment$dayOfWeekName(date));
+			case 'DayOfWeekNameFull':
+				return _ryannhg$elm_moment$Moment$dayOfWeekName(date);
+			case 'WeekOfYearNumber':
+				return _elm_lang$core$Basics$toString(
+					_ryannhg$elm_moment$Moment$weekOfYear(date));
+			case 'WeekOfYearSuffix':
+				return _ryannhg$elm_moment$Moment$toSuffix(
+					_ryannhg$elm_moment$Moment$weekOfYear(date));
+			case 'WeekOfYearFixed':
+				return _ryannhg$elm_moment$Moment$toFixedLength(
+					_ryannhg$elm_moment$Moment$weekOfYear(date));
+			case 'YearNumberLastTwo':
+				return A2(
+					_elm_lang$core$String$right,
+					2,
+					_ryannhg$elm_moment$Moment$year(date));
+			case 'YearNumberCapped':
+				return _ryannhg$elm_moment$Moment$year(date);
+			case 'YearNumber':
+				return _ryannhg$elm_moment$Moment$year(date);
+			case 'AmPmUppercase':
+				return _elm_lang$core$String$toUpper(
+					_ryannhg$elm_moment$Moment$amPm(date));
+			case 'AmPmLowercase':
+				return _elm_lang$core$String$toLower(
+					_ryannhg$elm_moment$Moment$amPm(date));
+			case 'HourMilitaryNumber':
+				return _elm_lang$core$Basics$toString(
+					_elm_lang$core$Date$hour(date));
+			case 'HourMilitaryFixed':
+				return _ryannhg$elm_moment$Moment$toFixedLength(
+					_elm_lang$core$Date$hour(date));
+			case 'HourNumber':
+				return _elm_lang$core$Basics$toString(
+					_ryannhg$elm_moment$Moment$toNonMilitary(
+						_elm_lang$core$Date$hour(date)));
+			case 'HourFixed':
+				return _ryannhg$elm_moment$Moment$toFixedLength(
+					_ryannhg$elm_moment$Moment$toNonMilitary(
+						_elm_lang$core$Date$hour(date)));
+			case 'HourMilitaryFromOneNumber':
+				return _elm_lang$core$Basics$toString(
+					A2(
+						F2(
+							function (x, y) {
+								return x + y;
+							}),
+						1,
+						_elm_lang$core$Date$hour(date)));
+			case 'HourMilitaryFromOneFixed':
+				return _ryannhg$elm_moment$Moment$toFixedLength(
+					A2(
+						F2(
+							function (x, y) {
+								return x + y;
+							}),
+						1,
+						_elm_lang$core$Date$hour(date)));
+			case 'MinuteNumber':
+				return _elm_lang$core$Basics$toString(
+					_elm_lang$core$Date$minute(date));
+			case 'MinuteFixed':
+				return _ryannhg$elm_moment$Moment$toFixedLength(
+					_elm_lang$core$Date$minute(date));
+			case 'SecondNumber':
+				return _elm_lang$core$Basics$toString(
+					_elm_lang$core$Date$second(date));
+			case 'SecondFixed':
+				return _ryannhg$elm_moment$Moment$toFixedLength(
+					_elm_lang$core$Date$second(date));
+			default:
+				return _p14._0;
+		}
+	});
+var _ryannhg$elm_moment$Moment$format = F2(
+	function (tokens, date) {
+		return A2(
+			_elm_lang$core$String$join,
+			'',
+			A2(
+				_elm_lang$core$List$map,
+				_ryannhg$elm_moment$Moment$piece(date),
+				tokens));
+	});
+var _ryannhg$elm_moment$Moment$SimpleDate = F3(
+	function (a, b, c) {
+		return {month: a, day: b, year: c};
+	});
+var _ryannhg$elm_moment$Moment$Text = function (a) {
+	return {ctor: 'Text', _0: a};
+};
+var _ryannhg$elm_moment$Moment$SecondFixed = {ctor: 'SecondFixed'};
+var _ryannhg$elm_moment$Moment$SecondNumber = {ctor: 'SecondNumber'};
+var _ryannhg$elm_moment$Moment$MinuteFixed = {ctor: 'MinuteFixed'};
+var _ryannhg$elm_moment$Moment$MinuteNumber = {ctor: 'MinuteNumber'};
+var _ryannhg$elm_moment$Moment$HourMilitaryFromOneFixed = {ctor: 'HourMilitaryFromOneFixed'};
+var _ryannhg$elm_moment$Moment$HourMilitaryFromOneNumber = {ctor: 'HourMilitaryFromOneNumber'};
+var _ryannhg$elm_moment$Moment$HourFixed = {ctor: 'HourFixed'};
+var _ryannhg$elm_moment$Moment$HourNumber = {ctor: 'HourNumber'};
+var _ryannhg$elm_moment$Moment$HourMilitaryFixed = {ctor: 'HourMilitaryFixed'};
+var _ryannhg$elm_moment$Moment$HourMilitaryNumber = {ctor: 'HourMilitaryNumber'};
+var _ryannhg$elm_moment$Moment$AmPmLowercase = {ctor: 'AmPmLowercase'};
+var _ryannhg$elm_moment$Moment$AmPmUppercase = {ctor: 'AmPmUppercase'};
+var _ryannhg$elm_moment$Moment$WeekOfYearFixed = {ctor: 'WeekOfYearFixed'};
+var _ryannhg$elm_moment$Moment$WeekOfYearSuffix = {ctor: 'WeekOfYearSuffix'};
+var _ryannhg$elm_moment$Moment$WeekOfYearNumber = {ctor: 'WeekOfYearNumber'};
+var _ryannhg$elm_moment$Moment$QuarterSuffix = {ctor: 'QuarterSuffix'};
+var _ryannhg$elm_moment$Moment$QuarterNumber = {ctor: 'QuarterNumber'};
+var _ryannhg$elm_moment$Moment$YearNumber = {ctor: 'YearNumber'};
+var _ryannhg$elm_moment$Moment$YearNumberCapped = {ctor: 'YearNumberCapped'};
+var _ryannhg$elm_moment$Moment$YearNumberLastTwo = {ctor: 'YearNumberLastTwo'};
+var _ryannhg$elm_moment$Moment$DayOfWeekNameFull = {ctor: 'DayOfWeekNameFull'};
+var _ryannhg$elm_moment$Moment$DayOfWeekNameFirstThree = {ctor: 'DayOfWeekNameFirstThree'};
+var _ryannhg$elm_moment$Moment$DayOfWeekNameFirstTwo = {ctor: 'DayOfWeekNameFirstTwo'};
+var _ryannhg$elm_moment$Moment$DayOfWeekSuffix = {ctor: 'DayOfWeekSuffix'};
+var _ryannhg$elm_moment$Moment$DayOfWeekNumber = {ctor: 'DayOfWeekNumber'};
+var _ryannhg$elm_moment$Moment$DayOfYearFixed = {ctor: 'DayOfYearFixed'};
+var _ryannhg$elm_moment$Moment$DayOfYearSuffix = {ctor: 'DayOfYearSuffix'};
+var _ryannhg$elm_moment$Moment$DayOfYearNumber = {ctor: 'DayOfYearNumber'};
+var _ryannhg$elm_moment$Moment$DayOfMonthFixed = {ctor: 'DayOfMonthFixed'};
+var _ryannhg$elm_moment$Moment$DayOfMonthSuffix = {ctor: 'DayOfMonthSuffix'};
+var _ryannhg$elm_moment$Moment$DayOfMonthNumber = {ctor: 'DayOfMonthNumber'};
+var _ryannhg$elm_moment$Moment$MonthNameFull = {ctor: 'MonthNameFull'};
+var _ryannhg$elm_moment$Moment$MonthNameFirstThree = {ctor: 'MonthNameFirstThree'};
+var _ryannhg$elm_moment$Moment$MonthFixed = {ctor: 'MonthFixed'};
+var _ryannhg$elm_moment$Moment$MonthSuffix = {ctor: 'MonthSuffix'};
+var _ryannhg$elm_moment$Moment$MonthNumber = {ctor: 'MonthNumber'};
+
 var _user$project$Models$Model = F3(
 	function (a, b, c) {
 		return {blogs: a, blog: b, settings: c};
@@ -11694,6 +12260,37 @@ var _user$project$Update$update = F2(
 		}
 	});
 
+var _user$project$Views$date_formatter = function (datestr) {
+	var _p0 = _elm_lang$core$Date$fromString(datestr);
+	if (_p0.ctor === 'Ok') {
+		return A2(
+			_ryannhg$elm_moment$Moment$format,
+			{
+				ctor: '::',
+				_0: _ryannhg$elm_moment$Moment$MonthNameFirstThree,
+				_1: {
+					ctor: '::',
+					_0: _ryannhg$elm_moment$Moment$Text(' '),
+					_1: {
+						ctor: '::',
+						_0: _ryannhg$elm_moment$Moment$DayOfMonthSuffix,
+						_1: {
+							ctor: '::',
+							_0: _ryannhg$elm_moment$Moment$Text(', '),
+							_1: {
+								ctor: '::',
+								_0: _ryannhg$elm_moment$Moment$YearNumber,
+								_1: {ctor: '[]'}
+							}
+						}
+					}
+				}
+			},
+			_p0._0);
+	} else {
+		return '';
+	}
+};
 var _user$project$Views$icon = F2(
 	function (ss, tt) {
 		return A2(
@@ -11851,7 +12448,12 @@ var _user$project$Views$tag_view = function (blog) {
 									_0: _elm_lang$html$Html_Attributes$datetime(blog.datetime),
 									_1: {ctor: '[]'}
 								},
-								{ctor: '[]'}),
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text(
+										_user$project$Views$date_formatter(blog.datetime)),
+									_1: {ctor: '[]'}
+								}),
 							_1: {ctor: '[]'}
 						}
 					}),
@@ -11866,8 +12468,8 @@ var _user$project$Views$tag_view = function (blog) {
 								ctor: '::',
 								_0: _elm_lang$html$Html_Attributes$class(
 									function () {
-										var _p0 = blog.summary;
-										if (_p0 === 'No Summary') {
+										var _p1 = blog.summary;
+										if (_p1 === 'No Summary') {
 											return 'hidden';
 										} else {
 											return '';
@@ -11996,8 +12598,8 @@ var _user$project$Views$blogs_list = function (blogs) {
 			A2(_elm_lang$core$List$map, _user$project$Views$blogs_list_single, blogs)));
 };
 var _user$project$Views$blogs_view = function (res) {
-	var _p1 = res;
-	switch (_p1.ctor) {
+	var _p2 = res;
+	switch (_p2.ctor) {
 		case 'NotAsked':
 			return A2(
 				_elm_lang$html$Html$div,
@@ -12032,25 +12634,25 @@ var _user$project$Views$blogs_view = function (res) {
 						_1: {ctor: '[]'}
 					}
 				},
-				_user$project$Views$blogs_list(_p1._0));
+				_user$project$Views$blogs_list(_p2._0));
 		default:
 			return _elm_lang$html$Html$text(
-				_elm_lang$core$Basics$toString(_p1._0));
+				_elm_lang$core$Basics$toString(_p2._0));
 	}
 };
 var _user$project$Views$blog_ = F2(
 	function (blog, nav_) {
 		var next = function () {
-			var _p2 = blog.next;
-			if (_p2 === '') {
+			var _p3 = blog.next;
+			if (_p3 === '') {
 				return true;
 			} else {
 				return false;
 			}
 		}();
 		var last = function () {
-			var _p3 = blog.last;
-			if (_p3 === '') {
+			var _p4 = blog.last;
+			if (_p4 === '') {
 				return true;
 			} else {
 				return false;
@@ -12378,8 +12980,8 @@ var _user$project$Views$blog_ = F2(
 		};
 	});
 var _user$project$Views$blog_view = function (model) {
-	var _p4 = model.blog;
-	switch (_p4.ctor) {
+	var _p5 = model.blog;
+	switch (_p5.ctor) {
 		case 'NotAsked':
 			return A2(
 				_elm_lang$html$Html$div,
@@ -12414,10 +13016,10 @@ var _user$project$Views$blog_view = function (model) {
 						_1: {ctor: '[]'}
 					}
 				},
-				A2(_user$project$Views$blog_, _p4._0, model.settings.nav));
+				A2(_user$project$Views$blog_, _p5._0, model.settings.nav));
 		default:
 			return _elm_lang$html$Html$text(
-				_elm_lang$core$Basics$toString(_p4._0));
+				_elm_lang$core$Basics$toString(_p5._0));
 	}
 };
 var _user$project$Views$find_me = function (base) {
@@ -12809,8 +13411,8 @@ var _user$project$Views$footer_view = {
 	}
 };
 var _user$project$Views$main_view = function (model) {
-	var _p5 = model.settings.route;
-	switch (_p5.ctor) {
+	var _p6 = model.settings.route;
+	switch (_p6.ctor) {
 		case 'Normal':
 			return {
 				ctor: '::',
@@ -12867,8 +13469,8 @@ var _user$project$Views$main_view = function (model) {
 };
 var _user$project$Views$header_view = function (model) {
 	var hidden = function () {
-		var _p6 = model.settings.route;
-		if (_p6.ctor === 'BlogRoute') {
+		var _p7 = model.settings.route;
+		if (_p7.ctor === 'BlogRoute') {
 			return true;
 		} else {
 			return false;
