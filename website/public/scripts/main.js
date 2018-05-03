@@ -219,3 +219,7 @@ window.addEventListener('scroll', function () {
         }
     }
 });
+window.addEventListener('scroll', () => {
+    // by laobubu
+    document.body.style.backgroundPositionY = -0.3 * window.scrollY + 'px'
+}, false)

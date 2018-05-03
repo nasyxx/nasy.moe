@@ -282,7 +282,19 @@ hr {
 body {
   background: #0f0c29;
   background-attachment: fixed;
-  background-image: linear-gradient(to top, rgba(15,12,41,0.7), rgba(48,43,99,0.7), rgba(36,36,62,0.7)), url("/images/star.gif");
+  transition: none;
+  background-image: url("/images/star.gif");
+}
+body:before {
+  display: block;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+  left: 0;
+  top: 0;
+  content: ' ';
+  z-index: -1;
+  background: linear-gradient(to top, rgba(15,12,41,0.7), rgba(48,43,99,0.7), rgba(36,36,62,0.7));
 }
 code {
   text-rendering: optimizeLegibility;
