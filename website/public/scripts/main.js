@@ -65,11 +65,11 @@ app.ports.set_title.subscribe(function (title) {
 
 
 app.ports.up2top.subscribe(function (_) {
-    var high = document.body.scrollTop
+    var high = window.scrollY
     if (high / 100 > 100) {
-        scroll_to(document.body, 0)
+        scroll_to(0)
     } else {
-        scroll_to(document.body, 0)
+        scroll_to(0)
     }
 })
 
@@ -82,19 +82,19 @@ document.addEventListener("visibilitychange", function () {
     } else document.title = normal_title;
 });
 
-function scroll_to(element, to) {
-    var difference = to - element.scrollTop;
+function scroll_to(to) {
+    var difference = to - window.scrollY;
 
     if (Math.abs(difference) < 10) {
-        element.scrollTop = to;
-        return;
+        window.scroll(window.scrollX, to)
+        return
     }
 
     var ratio = 60;
-    element.scrollTop = (element.scrollTop * ratio + to) / (ratio + 2);
+    window.scroll(window.scrollX, (window.scrollY * ratio + to) / (ratio + 2));
 
     setTimeout(function () {
-        scroll_to(element, to);
+        scroll_to(to);
     }, 10);
 }
 
