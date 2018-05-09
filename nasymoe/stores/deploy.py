@@ -73,7 +73,7 @@ def deploy_blog(blog: BST) -> None:
     """Deploy blog content json files."""
     path = Path("./public/blog")
     for b in blog:
-        bpath = path.joinpath(str(b["blog_path"]))
+        bpath = path / "blog" / str(b["blog_path"])
         os.makedirs(bpath.parent.as_posix(), exist_ok = True)
         with bpath.open("w") as f:
             json.dump(b, f)
@@ -81,7 +81,7 @@ def deploy_blog(blog: BST) -> None:
 
 def deploy_blogs(blogs: BST) -> None:
     """Deploy blogs json file."""
-    with Path("./public/blogs").open("w") as f:
+    with Path("./public/blog/blogs").open("w") as f:
         json.dump(blogs, f)
 
 

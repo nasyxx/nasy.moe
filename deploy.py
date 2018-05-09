@@ -37,14 +37,20 @@ Excited without bugs::
 There are more things in heaven and earth, Horatio, than are dreamt.
  --  From "Hamlet"
 """
-# from nasymoe.render.org import emacs_daemon
-# from nasymoe.render.render import render_blogs
-from nasymoe.stores.deploy import deploy_static
+from nasymoe.render.render import add_last_next, render_blogs
+from nasymoe.stores.deploy import deploy_all
+from nasymoe.stores.stores import load_store_blog, load_store_blogs
+from nasymoe.utils.dict_list import blog2ldict, ldict2blog
 
 
 def deploy() -> None:
     """Deploy blog."""
-    deploy_static()
+    rblogs, rblog = render_blogs(2, "blog")
+    blogs, blog = add_last_next((
+        ldict2blog(load_store_blogs(rblogs)),
+        ldict2blog(load_store_blog(rblog)),
+    ))
+    deploy_all((blog2ldict(blog), blog2ldict(blogs)))
 
 
 if __name__ == '__main__':

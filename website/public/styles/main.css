@@ -283,27 +283,24 @@ body {
   background: #0f0c29;
   background-attachment: fixed;
   transition: none;
-  background-image: url("/images/star.gif");
+  background-image: url("/images/star.gif"), linear-gradient(to top, rgba(15,12,41,0.7), rgba(48,43,99,0.7), rgba(36,36,62,0.7));
 }
-body:before {
-  display: block;
-  right: 0;
-  bottom: 0;
-  position: fixed;
-  left: 0;
-  top: 0;
-  content: ' ';
-  z-index: -1;
-  background: linear-gradient(to top, rgba(15,12,41,0.7), rgba(48,43,99,0.7), rgba(36,36,62,0.7));
+pre.src {
+  max-width: 100%;
+}
+div.org-src-container {
+  max-width: 100%;
 }
 code {
   text-rendering: optimizeLegibility;
   font-family: "FiraCode-retina", "Fira Code", "hermit", "operator mono book", "Menlo", "Meslo LG", monospace;
   font-size: 0.9em;
+  max-width: 100%;
 }
 code pre {
   text-rendering: optimizeLegibility;
   font-family: "FiraCode-retina", "Fira Code", "hermit", "operator mono book", "Menlo", "Meslo LG", monospace;
+  max-width: 100%;
 }
 code span {
   text-rendering: optimizeLegibility;

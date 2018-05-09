@@ -11908,8 +11908,8 @@ var _user$project$Msgs$OnFetchBlog = function (a) {
 	return {ctor: 'OnFetchBlog', _0: a};
 };
 
-var _user$project$Commands$blogs_url = 'https://api.nasy.moe/blogs';
-var _user$project$Commands$blog_url = 'https://api.nasy.moe/blog/';
+var _user$project$Commands$blogs_url = 'https://blog.nasy.moe/blogs';
+var _user$project$Commands$blog_url = 'https://blog.nasy.moe/blog/';
 var _user$project$Commands$date_decoder = A3(
 	_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
 	'day',
@@ -11998,7 +11998,7 @@ var _user$project$Commands$main_decoder = A4(
 																	'title',
 																	_elm_lang$core$Json_Decode$string,
 																	_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Models$BlogModel))))))))))))))))));
-var _user$project$Commands$blog_decoder = A2(_elm_lang$core$Json_Decode$field, 'results', _user$project$Commands$main_decoder);
+var _user$project$Commands$blog_decoder = _user$project$Commands$main_decoder;
 var _user$project$Commands$fetch_blog = function (blog_path) {
 	return A2(
 		_elm_lang$core$Platform_Cmd$map,
@@ -12009,10 +12009,7 @@ var _user$project$Commands$fetch_blog = function (blog_path) {
 				A2(_elm_lang$core$Basics_ops['++'], _user$project$Commands$blog_url, blog_path),
 				_user$project$Commands$blog_decoder)));
 };
-var _user$project$Commands$blogs_decoder = A2(
-	_elm_lang$core$Json_Decode$field,
-	'results',
-	_elm_lang$core$Json_Decode$list(_user$project$Commands$main_decoder));
+var _user$project$Commands$blogs_decoder = _elm_lang$core$Json_Decode$list(_user$project$Commands$main_decoder);
 var _user$project$Commands$fetch_blogs = A2(
 	_elm_lang$core$Platform_Cmd$map,
 	_user$project$Msgs$OnFetchBlogs,
@@ -13330,16 +13327,53 @@ var _user$project$Views$nav_view = function (base) {
 	};
 };
 var _user$project$Views$notfound = A2(
-	_elm_lang$html$Html$p,
+	_elm_lang$html$Html$section,
+	{ctor: '[]'},
 	{
 		ctor: '::',
-		_0: _elm_lang$html$Html_Attributes$id('failure'),
-		_1: {ctor: '[]'}
-	},
-	{
-		ctor: '::',
-		_0: _elm_lang$html$Html$text('404 Not Found'),
-		_1: {ctor: '[]'}
+		_0: A2(
+			_elm_lang$html$Html$h3,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$id('failure'),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html$text('似乎出错了!!!!'),
+				_1: {ctor: '[]'}
+			}),
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$p,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$id('failure'),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('试试刷新？'),
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$p,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$id('failure'),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text('Error.'),
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			}
+		}
 	});
 var _user$project$Views$footer_view = {
 	ctor: '::',

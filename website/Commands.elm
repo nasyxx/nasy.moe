@@ -86,12 +86,14 @@ main_decoder =
 
 blog_decoder : Decode.Decoder BlogModel
 blog_decoder =
-    main_decoder |> field "results"
+    -- main_decoder |> field "results"
+    main_decoder
 
 
 blogs_decoder : Decode.Decoder BlogsModel
 blogs_decoder =
-    list main_decoder |> field "results"
+    -- list main_decoder |> field "results"
+    list main_decoder
 
 
 
@@ -100,12 +102,12 @@ blogs_decoder =
 
 blog_url : String
 blog_url =
-    "https://api.nasy.moe/blog/"
+    "https://blog.nasy.moe/blog/"
 
 
 blogs_url : String
 blogs_url =
-    "https://api.nasy.moe/blogs"
+    "https://blog.nasy.moe/blogs"
 
 
 fetch_blogs : Cmd Msg

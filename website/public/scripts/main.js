@@ -169,7 +169,11 @@ function remove_last_tag_c() {
 }
 
 function remove_duplicate_h1() {
-    document.querySelector("#content").removeChild(document.querySelector("#content > h1"))
+    try {
+        document.querySelector("#content").removeChild(document.querySelector("#content > h1"))
+    } catch {
+        console.log("Not In Blog")
+    }
 }
 
 // function formattime() {
@@ -219,7 +223,7 @@ window.addEventListener('scroll', function () {
         }
     }
 });
-window.addEventListener('scroll', () => {
-    // by laobubu
-    document.body.style.backgroundPositionY = -0.3 * window.scrollY + 'px'
-}, false)
+// window.addEventListener('scroll', () => {
+//     // by laobubu
+//     document.body.style.backgroundPositionY = -0.3 * window.scrollY + 'px'
+// }, false)

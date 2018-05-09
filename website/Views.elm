@@ -150,7 +150,11 @@ footer_view =
 
 notfound : Html Msg
 notfound =
-    p [ id "failure" ] [ text "404 Not Found" ]
+    section []
+        [ h3 [ id "failure" ] [ text "似乎出错了!!!!" ]
+        , p [ id "failure" ] [ text "试试刷新？" ]
+        , p [ id "failure" ] [ text "Error." ]
+        ]
 
 
 
