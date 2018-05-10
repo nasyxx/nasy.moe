@@ -283,7 +283,7 @@ body {
   background: #0f0c29;
   background-attachment: fixed;
   transition: none;
-  background-image: url("/images/star.gif"), linear-gradient(to top, rgba(15,12,41,0.7), rgba(48,43,99,0.7), rgba(36,36,62,0.7));
+  background-image: linear-gradient(to top, rgba(15,12,41,0.7), rgba(48,43,99,0.7), rgba(36,36,62,0.7)), url("/images/star.gif");
 }
 pre.src {
   max-width: 100%;

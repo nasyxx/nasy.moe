@@ -73,7 +73,7 @@ def get_org_info(line: str) -> Optional[BI]:
         return kl, sorted(re.split(r",\s*", v))
 
     elif kl == "date" and v:
-        date = parse(v)
+        date = parse(v[:-4])
         return kl, {
             "year": f"{date.year:4}",
             "month": f"{date.month:02}",
