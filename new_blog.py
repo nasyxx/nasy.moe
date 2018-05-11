@@ -64,7 +64,7 @@ def hana(title: str, kw: Tuple[str, ...] = None,
         f.write("\n".join([
             f"#+TITLE: {title}",
             "#+DATE: "
-            f"{now().format('<YYYY-MM-DD MMM>')}",
+            f"{now().format('<YYYY-MM-DD ddd>')}",
             "#+AUTHOR: Nasy",
             "#+TAGS: 花, flower, hana"
             f"{', ' + ', '.join(map(str, kw)) if kw else ''}",
@@ -81,7 +81,7 @@ def grass(title: str, kw: Tuple[str, ...] = None,
         f.write("\n".join([
             f"#+TITLE: {title}",
             "#+DATE: "
-            f"{now().format('<YYYY-MM-DD MMM>')}",
+            f"{now().format('<YYYY-MM-DD ddd>')}",
             "#+AUTHOR: Nasy",
             "#+TAGS: 草, grass"
             f"{', ' + ', '.join(map(str, kw)) if kw else ''}",
@@ -98,7 +98,7 @@ def fish(title: str, kw: Tuple[str, ...] = None,
         f.write("\n".join([
             f"#+TITLE: {title}",
             "#+DATE: "
-            f"{now().format('<YYYY-MM-DD MMM>')}",
+            f"{now().format('<YYYY-MM-DD ddd>')}",
             "#+AUTHOR: Nasy",
             "#+TAGS: 鱼, fish"
             f"{', ' + ', '.join(map(str, kw)) if kw else ''}",
