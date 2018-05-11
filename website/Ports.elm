@@ -48,3 +48,6 @@ port set_title : String -> Cmd msg
 
 
 port up2top : String -> Cmd msg
+
+
+port init_comment : String -> Cmd msg

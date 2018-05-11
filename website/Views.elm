@@ -109,6 +109,10 @@ main_view model =
 
         BlogRoute ->
             [ blog_view model
+            , div [ id "gitalk-comment" ]
+                [ p [ onClick Msgs.InitComment ]
+                    [ text "Click to load comments" ]
+                ]
             ]
 
         NotFoundRoute ->

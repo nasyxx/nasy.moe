@@ -11894,6 +11894,7 @@ var _user$project$Models$init_model = function (flag) {
 	};
 };
 
+var _user$project$Msgs$InitComment = {ctor: 'InitComment'};
 var _user$project$Msgs$Up2Top = {ctor: 'Up2Top'};
 var _user$project$Msgs$ChangeNavN = {ctor: 'ChangeNavN'};
 var _user$project$Msgs$ChangeNavF = {ctor: 'ChangeNavF'};
@@ -12023,6 +12024,11 @@ var _user$project$Ports$set_title = _elm_lang$core$Native_Platform.outgoingPort(
 	});
 var _user$project$Ports$up2top = _elm_lang$core$Native_Platform.outgoingPort(
 	'up2top',
+	function (v) {
+		return v;
+	});
+var _user$project$Ports$init_comment = _elm_lang$core$Native_Platform.outgoingPort(
+	'init_comment',
 	function (v) {
 		return v;
 	});
@@ -12248,11 +12254,17 @@ var _user$project$Update$update = F2(
 						{settings: settings}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			default:
+			case 'Up2Top':
 				return {
 					ctor: '_Tuple2',
 					_0: model,
 					_1: _user$project$Ports$up2top('')
+				};
+			default:
+				return {
+					ctor: '_Tuple2',
+					_0: model,
+					_1: _user$project$Ports$init_comment('')
 				};
 		}
 	});
@@ -13511,7 +13523,33 @@ var _user$project$Views$main_view = function (model) {
 			return {
 				ctor: '::',
 				_0: _user$project$Views$blog_view(model),
-				_1: {ctor: '[]'}
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$div,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$id('gitalk-comment'),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$p,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Events$onClick(_user$project$Msgs$InitComment),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text('Click to load comments'),
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						}),
+					_1: {ctor: '[]'}
+				}
 			};
 		default:
 			return {

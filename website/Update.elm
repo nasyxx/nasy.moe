@@ -46,7 +46,7 @@ module Update exposing (..)
 import Commands exposing (fetch_blog, fetch_blogs)
 import Models exposing (BlogModel, BlogsModel, Model, Route(..))
 import Msgs exposing (Msg)
-import Ports exposing (set_title, up2top)
+import Ports exposing (set_title, up2top, init_comment)
 import RemoteData exposing (WebData)
 import RouteUrl.Builder exposing (..)
 
@@ -202,3 +202,6 @@ update msg model =
 
             Msgs.Up2Top ->
                 ( model, up2top "" )
+
+            Msgs.InitComment ->
+                ( model, init_comment "" )

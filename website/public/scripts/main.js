@@ -73,6 +73,26 @@ app.ports.up2top.subscribe(function (_) {
     }
 })
 
+app.ports.init_comment.subscribe(function (_) {
+    const gitalk = new Gitalk({
+        clientID: '434498d156d6042c22a4',
+        clientSecret: '11c8c6cce2e0c5e23749c0602841c855293476b7',
+        repo: 'comments',
+        owner: 'nasyxx',
+        admin: ['nasyxx'],
+        id: "comment",
+        labels: ['comment'],
+        createIssueManually: true,
+        enableHotKey: true,
+        perPage: 10,
+        // facebook-like distraction free mode
+        distractionFreeMode: false,
+        body: location.href
+    })
+    gitalk.options.id = document.title
+    gitalk.render("gitalk-comment")
+})
+
 ///////////////
 
 document.addEventListener("visibilitychange", function () {

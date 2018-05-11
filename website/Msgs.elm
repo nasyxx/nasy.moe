@@ -55,3 +55,4 @@ type Msg
     | ChangeNavF
     | ChangeNavN
     | Up2Top
+    | InitComment

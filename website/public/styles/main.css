@@ -395,6 +395,59 @@ td.hljs-ln-code {
 .hljs-ln tr > td {
   display: flex;
 }
+#comment {
+  color: #e1ffcf;
+  font-family: "Chalkboard", "comic sans", "PingFang SC", "Meslo LG", "sans-serif";
+}
+.gt-counts,
+.gt-user-inner {
+  color: #e1ffcf;
+  font-family: "Chalkboard", "comic sans", "PingFang SC", "Meslo LG", "sans-serif";
+}
+.gt-svg svg {
+  fill: #ffaaa5 !important;
+}
+.gt-popup {
+  background-color: rgba(15,12,41,0.7) !important;
+  border-radius: 10px;
+}
+.gt-meta {
+  border-bottom: none !important;
+}
+.gt-container .gt-copyright {
+  border-top: none !important;
+}
+.gt-container .gt-popup .gt-action {
+  text-decoration: none;
+}
+.gt-container a.is--active {
+  color: #ffaaa5;
+}
+.gt-header-comment textarea {
+  background-color: #e0f9b5 !important;
+  border-radius: 20px !important;
+}
+div.gr_ver_2 {
+  background-color: rgba(15,12,41,0.7) !important;
+  border-radius: 20px !important;
+}
+.gt-comment-header {
+  font-family: "Chalkboard", "comic sans", "PingFang SC", "Meslo LG", "sans-serif";
+}
+.gt-comment-content {
+  background-color: rgba(36,36,62,0.7) !important;
+  border-radius: 20px;
+  box-shadow: 0 0 5px rgba(15,12,41,0.7) !important;
+}
+.gt-comment-content:hover {
+  box-shadow: 0 0 5px #4d3664 !important;
+  background-color: rgba(77,54,100,0.7) !important;
+}
+blockquote {
+  background-color: rgba(48,43,99,0.7);
+  border-radius: 10px;
+  border-left-color: #9efcb4 !important;
+}
 body {
   padding: 0;
   margin: auto;
