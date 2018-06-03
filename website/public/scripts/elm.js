@@ -13174,9 +13174,37 @@ var _user$project$Views$nav_view = function (base) {
 				_0: A2(
 					_elm_lang$html$Html$ul,
 					{ctor: '[]'},
-					A2(
-						_elm_lang$core$Basics_ops['++'],
-						{
+					{
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$li,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$class(
+									A2(_elm_lang$core$Basics_ops['++'], base, '-section-nav-list nav-list')),
+								_1: {ctor: '[]'}
+							},
+							{
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$a,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$href('https://nasy.me'),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$title('Who is Nasy?'),
+											_1: {ctor: '[]'}
+										}
+									},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text('Nasy'),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}),
+						_1: {
 							ctor: '::',
 							_0: A2(
 								_elm_lang$html$Html$li,
@@ -13192,16 +13220,16 @@ var _user$project$Views$nav_view = function (base) {
 										_elm_lang$html$Html$a,
 										{
 											ctor: '::',
-											_0: _elm_lang$html$Html_Attributes$href('https://nasy.me'),
+											_0: _elm_lang$html$Html_Attributes$href('/'),
 											_1: {
 												ctor: '::',
-												_0: _elm_lang$html$Html_Attributes$title('Who is Nasy?'),
+												_0: _elm_lang$html$Html_Attributes$title('Blog'),
 												_1: {ctor: '[]'}
 											}
 										},
 										{
 											ctor: '::',
-											_0: _elm_lang$html$Html$text('Nasy'),
+											_0: _elm_lang$html$Html$text('Blog'),
 											_1: {ctor: '[]'}
 										}),
 									_1: {ctor: '[]'}
@@ -13222,16 +13250,16 @@ var _user$project$Views$nav_view = function (base) {
 											_elm_lang$html$Html$a,
 											{
 												ctor: '::',
-												_0: _elm_lang$html$Html_Attributes$href('/'),
+												_0: _elm_lang$html$Html_Attributes$href('https://pools.nasy.moe'),
 												_1: {
 													ctor: '::',
-													_0: _elm_lang$html$Html_Attributes$title('Blog'),
+													_0: _elm_lang$html$Html_Attributes$title('Pools'),
 													_1: {ctor: '[]'}
 												}
 											},
 											{
 												ctor: '::',
-												_0: _elm_lang$html$Html$text('Blog'),
+												_0: _elm_lang$html$Html$text('Pools'),
 												_1: {ctor: '[]'}
 											}),
 										_1: {ctor: '[]'}
@@ -13252,87 +13280,25 @@ var _user$project$Views$nav_view = function (base) {
 												_elm_lang$html$Html$a,
 												{
 													ctor: '::',
-													_0: _elm_lang$html$Html_Attributes$href('https://pools.nasy.moe'),
+													_0: _elm_lang$html$Html_Attributes$href('/blog/2018/05/03/About#About'),
 													_1: {
 														ctor: '::',
-														_0: _elm_lang$html$Html_Attributes$title('Pools'),
+														_0: _elm_lang$html$Html_Attributes$title('About'),
 														_1: {ctor: '[]'}
 													}
 												},
 												{
 													ctor: '::',
-													_0: _elm_lang$html$Html$text('Pools'),
+													_0: _elm_lang$html$Html$text('About'),
 													_1: {ctor: '[]'}
 												}),
 											_1: {ctor: '[]'}
 										}),
-									_1: {
-										ctor: '::',
-										_0: A2(
-											_elm_lang$html$Html$li,
-											{
-												ctor: '::',
-												_0: _elm_lang$html$Html_Attributes$class(
-													A2(_elm_lang$core$Basics_ops['++'], base, '-section-nav-list nav-list')),
-												_1: {ctor: '[]'}
-											},
-											{
-												ctor: '::',
-												_0: A2(
-													_elm_lang$html$Html$a,
-													{
-														ctor: '::',
-														_0: _elm_lang$html$Html_Attributes$href('/blog/2018/05/03/About#About'),
-														_1: {
-															ctor: '::',
-															_0: _elm_lang$html$Html_Attributes$title('About'),
-															_1: {ctor: '[]'}
-														}
-													},
-													{
-														ctor: '::',
-														_0: _elm_lang$html$Html$text('About'),
-														_1: {ctor: '[]'}
-													}),
-												_1: {ctor: '[]'}
-											}),
-										_1: {ctor: '[]'}
-									}
+									_1: {ctor: '[]'}
 								}
 							}
-						},
-						{
-							ctor: '::',
-							_0: A2(
-								_elm_lang$html$Html$li,
-								{
-									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$class(
-										A2(_elm_lang$core$Basics_ops['++'], base, '-section-nav-list nav-list')),
-									_1: {ctor: '[]'}
-								},
-								{
-									ctor: '::',
-									_0: A2(
-										_elm_lang$html$Html$a,
-										{
-											ctor: '::',
-											_0: _elm_lang$html$Html_Attributes$href('/more'),
-											_1: {
-												ctor: '::',
-												_0: _elm_lang$html$Html_Attributes$title('More'),
-												_1: {ctor: '[]'}
-											}
-										},
-										{
-											ctor: '::',
-											_0: _elm_lang$html$Html$text('More'),
-											_1: {ctor: '[]'}
-										}),
-									_1: {ctor: '[]'}
-								}),
-							_1: {ctor: '[]'}
-						})),
+						}
+					}),
 				_1: {ctor: '[]'}
 			}),
 		_1: {ctor: '[]'}

@@ -182,10 +182,11 @@ nav_view base =
             , li [ class <| base ++ "-section-nav-list nav-list" ]
                 [ a [ href "/blog/2018/05/03/About#About", title "About" ] [ text "About" ] ]
             ]
-                ++ [ li
-                        [ class <| base ++ "-section-nav-list nav-list" ]
-                        [ a [ href "/more", title "More" ] [ text "More" ] ]
-                   ]
+
+        -- ++ [ li
+        --         [ class <| base ++ "-section-nav-list nav-list" ]
+        --         [ a [ href "/more", title "More" ] [ text "More" ] ]
+        --    ]
         ]
     ]
 
